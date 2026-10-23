@@ -12,7 +12,7 @@ const REFEICOES_CONFIG = {
   /* URL /exec do Apps Script da planilha "Refeições" (ver LANCAMENTO.md).
      Enquanto começar com COLE_, o site funciona e gera o Pix normalmente,
      mas NÃO grava os pedidos na planilha (aparece um aviso no rodapé). */
-  apiUrl: 'COLE_AQUI_A_URL_DO_APPS_SCRIPT',
+  apiUrl: 'https://script.google.com/macros/s/AKfycbxIhukRJJSetRa1eXxBmlycFAKBX9rjClzx2Qy23pasgZ0eWyi2MA2OZoF9SJdfgqdf/exec',
 
   /* Dados do recebedor (Grande Tesoureiro da Delegacia).
      nome: até 25 letras, sem acento, como está no banco.
