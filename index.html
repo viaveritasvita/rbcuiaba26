@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ágape — Jornada dos Graus Filosóficos · Rito Brasileiro · Cuiabá 2026</title>
+  <meta name="description" content="Garanta o seu lugar no café da manhã, no almoço e no jantar comemorativo da Jornada dos Graus Filosóficos do Rito Brasileiro · Cuiabá – MT · 7 de novembro de 2026. Pagamento por Pix.">
+  <meta name="theme-color" content="#581828">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="navegacao.css">
+  <link rel="stylesheet" href="refeicoes.css">
+
+  <!-- Open Graph / preview ao compartilhar (WhatsApp, redes) -->
+  <meta property="og:title" content="Jornada dos Graus Filosóficos — Rito Brasileiro · Cuiabá 2026">
+  <meta property="og:description" content="Sábado, 7 de novembro de 2026 · Garanta aqui o seu ágape: café, almoço e jantar comemorativo">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://viaveritasvita.github.io/rbcuiaba26/">
+  <meta property="og:image" content="https://viaveritasvita.github.io/rbcuiaba26/assets/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://viaveritasvita.github.io/rbcuiaba26/assets/og-cover.jpg">
+</head>
+<body class="pg-refeicoes">
+
+  <nav class="site-nav" aria-label="Páginas do evento">
+    <a href="./" aria-current="page">Ágape</a>
+    <a href="programacao.html">Programação</a>
+  </nav>
+
+  <!-- ============ CABEÇALHO ============ -->
+  <header class="masthead">
+    <div class="masthead-row">
+      <div class="medallion-wrap">
+        <img class="medallion" src="assets/brasao.png" width="200" height="200"
+          alt="Brasão do Supremo Conclave do Rito Brasileiro">
+      </div>
+      <div class="masthead-titles">
+        <div class="masthead-sigla"><span>Rito&nbsp;Brasileiro</span></div>
+        <h1>Ágape da <span class="title-accent">Jornada</span></h1>
+        <div class="date-plaque-row">
+          <div class="date-plaque">7 de novembro de 2026</div>
+        </div>
+        <p class="masthead-place">Sábado · Cuiabá · MT</p>
+      </div>
+    </div>
+  </header>
+
+  <hr class="hairline" aria-hidden="true">
+
+  <!-- aparece só enquanto a chave Pix não estiver em refeicoes-config.js -->
+  <div class="rf-demo" id="rfDemo" hidden>
+    <strong>Versão de avaliação.</strong> O Pix do Grande Tesoureiro ainda será configurado: não faça pagamentos por esta página.
+  </div>
+
+  <main id="app">
+    <p class="rf-lead">
+      Café da manhã, almoço e jantar comemorativo da Jornada.
+      Marque o que você vai fazer e quantos acompanhantes leva em cada um.
+      O valor sai na hora e o pagamento é por <strong>Pix</strong>, direto ao Grande Tesoureiro da Delegacia.
+    </p>
+
+    <!-- tabela de preços -->
+    <div class="rf-prices" id="rfPrices"></div>
+
+    <!-- pedido já feito neste aparelho -->
+    <div id="rfSaved"></div>
+
+    <!-- página fechada (prazo encerrado) -->
+    <div id="rfClosed" class="rf-card rf-closed" hidden>
+      <h2>Pedidos encerrados</h2>
+      <p>O prazo para garantir as refeições terminou. Em caso de dúvida, procure a organização.</p>
+    </div>
+
+    <!-- ============ FORMULÁRIO ============ -->
+    <form id="rfForm" novalidate>
+
+      <!-- 1. dados -->
+      <section class="rf-step">
+        <header class="rf-step-head"><span class="rf-step-num">1</span><h2>Seus dados</h2></header>
+        <div class="rf-card">
+          <label class="rf-field">
+            <span>Nome completo do irmão</span>
+            <input type="text" id="fNome" name="nome" autocomplete="name" required placeholder="Ex.: João da Silva">
+          </label>
+          <label class="rf-field">
+            <span>WhatsApp</span>
+            <input type="tel" id="fWhats" name="whatsapp" autocomplete="tel" inputmode="tel" required placeholder="(65) 99999-9999">
+          </label>
+          <label class="rf-field">
+            <span>Loja simbólica</span>
+            <input type="text" id="fLoja" name="loja" required placeholder="Nome e número da Loja">
+          </label>
+        </div>
+      </section>
+
+      <!-- 2. sessões -->
+      <section class="rf-step">
+        <header class="rf-step-head"><span class="rf-step-num">2</span><h2>Sessões de que vai participar</h2></header>
+        <p class="rf-hint">Ao marcar as sessões, sugerimos as refeições do seu horário. Você pode ajustar no passo 3.</p>
+        <div class="rf-sessions" id="fSessoes"></div>
+      </section>
+
+      <!-- 3. refeições -->
+      <section class="rf-step" id="fRefeicoes">
+        <header class="rf-step-head"><span class="rf-step-num">3</span><h2>Refeições e acompanhantes</h2></header>
+        <p class="rf-hint">Em cada refeição, marque se você vai e use o <strong>+</strong> para somar acompanhantes (cunhada, familiar ou convidado).</p>
+        <div class="rf-quick" id="fAtalhos">
+          <span class="rf-muted">Para você:</span>
+          <button type="button" data-atalho="almoco">Só almoço</button>
+          <button type="button" data-atalho="jantar">Só jantar</button>
+          <button type="button" data-atalho="almoco,jantar">Almoço + jantar</button>
+          <button type="button" data-atalho="cafe,almoco,jantar">As três</button>
+        </div>
+        <div id="fMeals"></div>
+        <p class="rf-muted rf-small" id="rfIncluso"></p>
+      </section>
+
+      <!-- 4. resumo -->
+      <section class="rf-step">
+        <header class="rf-step-head"><span class="rf-step-num">4</span><h2>Resumo</h2></header>
+        <div class="rf-card rf-summary" id="rfResumo"></div>
+        <p class="rf-error" id="rfErro" role="alert" hidden></p>
+        <button type="submit" class="rf-btn rf-btn-primary rf-btn-block" id="btnGerar">Gerar Pix</button>
+      </section>
+    </form>
+
+    <!-- ============ PAGAMENTO ============ -->
+    <section id="rfPagamento" hidden>
+      <div class="rf-card rf-pay">
+        <p class="rf-pay-label">Pedido</p>
+        <p class="rf-pay-code" id="payCodigo"></p>
+        <p class="rf-pay-total" id="payTotal"></p>
+        <p class="rf-pay-who" id="payQuem"></p>
+
+        <div class="rf-qr" id="payQr" aria-label="QR Code Pix"></div>
+        <p class="rf-muted rf-center">Abra o app do seu banco → <strong>Pix</strong> → <strong>Ler QR Code</strong>.<br>O valor já vem preenchido.</p>
+
+        <button type="button" class="rf-btn rf-btn-gold rf-btn-block" id="btnCopiaCola">Copiar Pix copia e cola</button>
+
+        <div class="rf-paydata">
+          <h3>Ou transfira pela chave Pix</h3>
+          <dl>
+            <dt>Chave</dt><dd><span id="payChave"></span> <button type="button" class="rf-copy" id="btnCopiaChave">copiar</button></dd>
+            <dt>Favorecido</dt><dd id="payFavorecido"></dd>
+            <dt id="payBancoLbl">Banco</dt><dd id="payBanco"></dd>
+            <dt>Valor</dt><dd id="payValor"></dd>
+            <dt>Mensagem</dt><dd>Escreva o código <strong id="payCodigo2"></strong></dd>
+          </dl>
+        </div>
+
+        <div class="rf-pay-actions">
+          <button type="button" class="rf-btn rf-btn-primary rf-btn-block" id="btnPaguei">Já fiz o Pix</button>
+          <button type="button" class="rf-btn rf-btn-ghost rf-btn-block" id="btnAlterar">Alterar o pedido</button>
+        </div>
+        <p class="rf-muted rf-center rf-small">Guarde o comprovante. O tesoureiro confere os pagamentos no extrato bancário pelo código do pedido.</p>
+      </div>
+    </section>
+
+    <!-- ============ CONCLUÍDO ============ -->
+    <section id="rfFeito" hidden>
+      <div class="rf-card rf-done">
+        <div class="rf-done-mark" aria-hidden="true">✓</div>
+        <h2>Pagamento informado</h2>
+        <p>Obrigado, <strong id="doneNome"></strong>. Seu pedido <strong id="doneCodigo"></strong> foi registrado e será confirmado pelo Grande Tesoureiro assim que o Pix aparecer no extrato.</p>
+        <p class="rf-done-total" id="doneTotal"></p>
+        <div class="rf-pay-actions">
+          <a class="rf-btn rf-btn-primary rf-btn-block" href="programacao.html">Ver a programação</a>
+          <button type="button" class="rf-btn rf-btn-ghost rf-btn-block" id="btnNovo">Fazer pedido para outro irmão</button>
+        </div>
+      </div>
+    </section>
+
+    <a class="rf-back" href="programacao.html">← Voltar à programação da Jornada</a>
+  </main>
+
+  <!-- barra fixa com o total -->
+  <div class="rf-bar" id="rfBar">
+    <div class="rf-bar-inner">
+      <div class="rf-bar-total">
+        <span class="rf-bar-label">Total</span>
+        <span class="rf-bar-value" id="barTotal">R$ 0,00</span>
+      </div>
+      <button type="button" class="rf-btn rf-btn-primary" id="barGerar">Gerar Pix</button>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-motto">
+      <span>Jornada dos Graus Filosóficos</span>
+      <span>4ª Delegacia Litúrgica de Mato Grosso · Supremo Conclave do Brasil</span>
+    </p>
+    <p class="footer-note" id="rfFootNote">Pedidos registrados para conferência do Grande Tesoureiro</p>
+    <p class="brand-signature">
+      <a href="#" rel="noopener"><span class="brand-name">ViaVeritasVita</span><span class="brand-dot" aria-hidden="true">·</span><span>conheça nossa estrutura de apoio à Maçonaria</span></a>
+    </p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <p style="text-align:center;padding:1rem;color:#581828">Esta página precisa de JavaScript.</p>
+  </noscript>
+
+  <script src="refeicoes-config.js"></script>
+  <script src="assets/qrcode.min.js"></script>
+  <script src="refeicoes.js"></script>
+</body>
+</html>

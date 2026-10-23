@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel das Refeições — Jornada RB · Cuiabá 2026</title>
+<meta name="theme-color" content="#581828">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vinho:#581828; --vinho-2:#3a0f1c; --ouro:#c9a24b; --ouro-claro:#e6cd94; --ouro-velho:#8a6828;
+  --tinta:#3a1520; --suave:#715058; --marfim:#faf6ef; --marfim-2:#f2e9da; --linha:rgba(154,123,46,.35);
+  --verde:#1a5c2a; --verde-bg:#e3f1e6; --ambar:#8a5c12; --ambar-bg:#fdf3d8; --verm:#8e2525; --verm-bg:#f7e0e0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--marfim);color:var(--tinta);font-family:'Source Serif 4',Georgia,serif;font-size:16px}
+.capa{background:linear-gradient(180deg,var(--vinho),var(--vinho-2));color:var(--ouro-claro);text-align:center;padding:22px 16px 18px;border-bottom:2px solid var(--ouro)}
+.capa small{font-family:'Cinzel',serif;letter-spacing:.24em;text-transform:uppercase;font-size:11px;color:var(--ouro)}
+.capa h1{font-family:'Cinzel',serif;margin:6px 0 0;font-size:22px;letter-spacing:.06em}
+.nav{display:flex;justify-content:center;gap:14px;padding:8px;background:var(--vinho-2)}
+.nav a{color:#cdbfb2;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.nav a:hover{color:var(--ouro-claro)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.login{max-width:360px;margin:40px auto;background:#fff;border:1px solid var(--linha);border-radius:12px;padding:22px;text-align:center}
+.login input{width:100%;min-height:46px;padding:8px 12px;font:inherit;border:1px solid var(--linha);border-radius:8px;background:var(--marfim);margin:10px 0}
+.btn{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:11px 16px;border-radius:999px;border:1px solid var(--vinho);background:var(--vinho);color:var(--ouro-claro);cursor:pointer}
+.btn.claro{background:#fff;color:var(--vinho);border-color:var(--linha)}
+.barra{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:6px 0 14px}
+.barra .grupo{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input[type=search]{font:inherit;min-height:42px;padding:6px 12px;border:1px solid var(--linha);border-radius:8px;background:#fff}
+.upd{font-size:13px;color:var(--suave)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:14px}
+.kpi .n{font-family:'Cinzel',serif;font-weight:700;font-size:26px;color:var(--vinho);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:13px;color:var(--suave);margin-top:4px}
+.kpi.ok .n{color:var(--verde)} .kpi.amb .n{color:var(--ambar)}
+.tabela{background:#fff;border:1px solid var(--linha);border-radius:12px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:'Cinzel',serif;font-weight:600;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ouro-velho);text-align:left;padding:10px 12px;background:var(--marfim-2);border-bottom:1px solid var(--linha);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid #efe7d2;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cod{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.08em;color:var(--vinho);white-space:nowrap}
+.pess{white-space:pre-line;color:var(--suave);font-size:13px}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;background:#eee;color:#555}
+.badge.ok{background:var(--verde-bg);color:var(--verde)} .badge.inf{background:var(--ambar-bg);color:var(--ambar)}
+.badge.gerado{background:#efe9de;color:#7a6a5a} .badge.err{background:var(--verm-bg);color:var(--verm)}
+.wa{color:var(--verde);text-decoration:none;white-space:nowrap}
+.vazio{padding:30px;text-align:center;color:var(--suave);font-style:italic}
+.erro{color:var(--verm);margin-top:8px}
+.ajuda{font-size:13.5px;color:var(--suave);margin-top:14px}
+@media print{.nav,.barra .grupo:last-child,.login{display:none}.capa{padding:8px}}
+</style>
+</head>
+<body>
+<nav class="nav"><a href="./">Ágape</a><a href="programacao.html">Programação</a></nav>
+<div class="capa">
+  <small>Rito Brasileiro · 4ª Delegacia Litúrgica</small>
+  <h1>Painel das Refeições</h1>
+</div>
+
+<div class="wrap">
+  <div class="login" id="login">
+    <p>Acesso da organização e do Grande Tesoureiro.</p>
+    <form id="fLogin">
+      <input type="password" id="senha" placeholder="Senha do painel" autocomplete="current-password" required>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+    <p class="erro" id="erroLogin" hidden></p>
+  </div>
+
+  <div id="conteudo" hidden>
+    <div class="barra">
+      <div class="grupo">
+        <select id="fStatus" aria-label="Filtrar por status">
+          <option value="">Todos os status</option>
+          <option>Pix gerado</option><option>Pagamento informado</option><option>Confirmado</option>
+          <option>Não localizado</option><option>Cancelado</option>
+        </select>
+        <input type="search" id="fBusca" placeholder="Buscar nome ou código" aria-label="Buscar">
+      </div>
+      <div class="grupo">
+        <span class="upd">Atualizado <b id="upd">—</b></span>
+        <button class="btn claro" id="btnAtualizar">Atualizar</button>
+        <button class="btn claro" id="btnCsv">Baixar CSV</button>
+        <button class="btn claro" onclick="window.print()">Imprimir</button>
+      </div>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+    <div class="tabela" id="tabela"></div>
+    <p class="ajuda">Para confirmar um pagamento, abra a planilha, aba <b>Pedidos</b>, e troque o <b>Status</b> para <b>Confirmado</b>.
+      Os números de cafés, almoços e jantares não contam pedidos cancelados.</p>
+  </div>
+</div>
+
+<script src="refeicoes-config.js"></script>
+<script>
+(function () {
+  var API = REFEICOES_CONFIG.apiUrl;
+  var KEY = 'rbcuiaba26.painel';
+  var DADOS = [];
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+  var brl = function (v) { return (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); };
+  var CLS = { 'Confirmado': 'ok', 'Pagamento informado': 'inf', 'Pix gerado': 'gerado', 'Não localizado': 'err', 'Cancelado': '' };
+
+  function senha() { try { return sessionStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
+
+  function carregar() {
+    $('#tabela').innerHTML = '<div class="vazio">Carregando…</div>';
+    return fetch(API + '?acao=listar&chave=' + encodeURIComponent(senha()) + '&_=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) throw new Error(j.erro || 'erro');
+        DADOS = j.pedidos || [];
+        $('#upd').textContent = new Date().toLocaleString('pt-BR');
+        $('#login').hidden = true; $('#conteudo').hidden = false;
+        render();
+      });
+  }
+
+  function filtrados() {
+    var st = $('#fStatus').value, q = $('#fBusca').value.trim().toLowerCase();
+    return DADOS.filter(function (p) {
+      if (st && p['Status'] !== st) return false;
+      if (q && (String(p['Irmão']) + ' ' + p['Código'] + ' ' + p['Loja simbólica']).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+  }
+
+  function acomp(p) {
+    var partes = [['Acomp. café','café'],['Acomp. almoço','almoço'],['Acomp. jantar','jantar']]
+      .filter(function (k) { return Number(p[k[0]]) > 0; })
+      .map(function (k) { return k[1] + ' ' + p[k[0]]; });
+    return partes.length ? esc(partes.join(' · ')) : '—';
+  }
+
+  function render() {
+    var validos = DADOS.filter(function (p) { return p['Status'] !== 'Cancelado'; });
+    var soma = function (arr, k) { return arr.reduce(function (s, p) { return s + (Number(p[k]) || 0); }, 0); };
+    var conf = validos.filter(function (p) { return p['Status'] === 'Confirmado'; });
+    var inf = validos.filter(function (p) { return p['Status'] === 'Pagamento informado'; });
+    $('#kpis').innerHTML = [
+      ['Pedidos', validos.length, ''],
+      ['Cafés da manhã', soma(validos, 'Cafés'), ''], ['Almoços', soma(validos, 'Almoços'), ''], ['Jantares', soma(validos, 'Jantares'), ''],
+      ['Valor total', brl(soma(validos, 'Valor (R$)')), ''],
+      ['Confirmado', brl(soma(conf, 'Valor (R$)')), 'ok'],
+      ['A conferir', brl(soma(inf, 'Valor (R$)')) + ' <small>(' + inf.length + ')</small>', 'amb'],
+    ].map(function (k) { return '<div class="kpi ' + k[2] + '"><div class="n">' + k[1] + '</div><div class="l">' + k[0] + '</div></div>'; }).join('');
+
+    var lista = filtrados();
+    if (!lista.length) { $('#tabela').innerHTML = '<div class="vazio">Nenhum pedido.</div>'; return; }
+    $('#tabela').innerHTML = '<table><thead><tr><th>Código</th><th>Status</th><th>Irmão</th><th>Irmão vai a</th><th>Acompanhantes</th>'
+      + '<th>Café</th><th>Almoço</th><th>Jantar</th><th>Valor</th><th>WhatsApp</th></tr></thead><tbody>'
+      + lista.map(function (p) {
+        var w = String(p['WhatsApp'] || '').replace(/\D/g, '');
+        if (w.length === 10 || w.length === 11) w = '55' + w;
+        return '<tr><td class="cod">' + esc(p['Código']) + '</td>'
+          + '<td><span class="badge ' + (CLS[p['Status']] || '') + '">' + esc(p['Status']) + '</span></td>'
+          + '<td>' + esc(p['Irmão']) + (p['Loja simbólica'] ? '<div class="pess">' + esc(p['Loja simbólica']) + '</div>' : '') + '</td>'
+          + '<td class="pess">' + esc(p['Refeições do irmão']) + '</td>'
+          + '<td class="pess">' + acomp(p) + '</td>'
+          + '<td class="num">' + esc(p['Cafés']) + '</td><td class="num">' + esc(p['Almoços']) + '</td><td class="num">' + esc(p['Jantares']) + '</td>'
+          + '<td class="num">' + brl(p['Valor (R$)']) + '</td>'
+          + '<td>' + (w ? '<a class="wa" href="https://wa.me/' + w + '" target="_blank" rel="noopener">' + esc(p['WhatsApp']) + '</a>' : '') + '</td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+
+  function csv() {
+    var cols = ['Código','Status','Criado em','Pagamento informado em','Confirmado em','Irmão','WhatsApp','Loja simbólica','Refeições do irmão','Acomp. café','Acomp. almoço','Acomp. jantar','Cafés','Almoços','Jantares','Valor (R$)'];
+    var q = function (v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; };
+    var linhas = [cols.map(q).join(';')].concat(filtrados().map(function (p) { return cols.map(function (c) { return q(p[c]); }).join(';'); }));
+    var blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'adesoes-jornada-rb.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  $('#fLogin').addEventListener('submit', function (e) {
+    e.preventDefault();
+    try { sessionStorage.setItem(KEY, $('#senha').value); } catch (err) {}
+    $('#erroLogin').hidden = true;
+    carregar().catch(function (err) {
+      $('#login').hidden = false; $('#conteudo').hidden = true;
+      $('#erroLogin').textContent = /senha/.test(err.message) ? 'Senha incorreta.' : 'Não foi possível ler a planilha. Verifique a URL do Apps Script.';
+      $('#erroLogin').hidden = false;
+    });
+  });
+  $('#btnAtualizar').addEventListener('click', function () { carregar().catch(function () {}); });
+  $('#btnCsv').addEventListener('click', csv);
+  $('#fStatus').addEventListener('change', render);
+  $('#fBusca').addEventListener('input', render);
+
+  if (/^COLE_/.test(API)) {
+    $('#login').innerHTML = '<p>O painel funciona depois que a URL do Apps Script for colada em <b>refeicoes-config.js</b>.</p>';
+  } else if (senha()) {
+    carregar().catch(function () { $('#login').hidden = false; });
+  }
+})();
+</script>
+</body>
+</html>

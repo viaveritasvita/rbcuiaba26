@@ -1,0 +1,52 @@
+/* ============================================================
+   navegacao.css — ponte entre as duas páginas do evento
+   (Refeições ⇄ Programação). Usa os tokens do styles.css.
+   ============================================================ */
+
+/* barra de páginas no topo */
+.site-nav {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; justify-content: center; gap: 0.35rem;
+  padding: 0.5rem 1rem calc(0.5rem);
+  background: var(--navy-900, #581828);
+  border-bottom: 1px solid rgba(230, 205, 148, 0.35);
+}
+.site-nav a {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream-dim, #cdbfb2); text-decoration: none;
+  padding: 0.55rem 1rem; border-radius: 999px; min-height: 40px;
+  display: inline-flex; align-items: center;
+  transition: background 0.2s, color 0.2s;
+}
+.site-nav a:hover { color: var(--gold-bright, #e6cd94); }
+.site-nav a[aria-current="page"] {
+  color: var(--navy-900, #581828);
+  background: var(--gold-bright, #e6cd94);
+}
+
+/* convite "Adquira aqui a sua refeição" na programação */
+.meal-cta {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.85rem;
+  max-width: var(--maxw, 44rem); margin: 1rem auto 0.25rem; padding: 0.9rem 1.1rem;
+  background: linear-gradient(180deg, #fbf4e2, #f4e8c9);
+  border: 1px solid var(--gold-line, rgba(154,123,46,.42));
+  border-left: 4px solid var(--gold, #c9a24b);
+  border-radius: var(--radius, 10px);
+  color: var(--ink, #3a1520); text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.meal-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-lift); }
+.meal-cta-icon { width: 2.4rem; height: 2.4rem; color: var(--gold-aged, #8a6828); }
+.meal-cta-icon svg { width: 100%; height: 100%; }
+.meal-cta-text { display: flex; flex-direction: column; gap: 0.1rem; }
+.meal-cta-text strong {
+  font-family: var(--font-display, 'Cinzel', serif); font-size: 0.95rem;
+  letter-spacing: 0.04em; color: var(--navy-900, #581828);
+}
+.meal-cta-text span { font-size: 0.92rem; color: var(--ink-soft, #5c3742); }
+.meal-cta-arrow { font-size: 1.4rem; color: var(--gold-aged, #8a6828); }
+
+/* o motor esconde botões com [hidden]; o display do styles.css não pode vencer */
+.action-btn[hidden] { display: none !important; }

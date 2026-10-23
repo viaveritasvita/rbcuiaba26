@@ -1,0 +1,1066 @@
+/* ============================================================
+   styles.css — IDENTIDADE VISUAL (Rito Brasileiro)
+   Pergaminho · vinho do brasão (#581828) · dourado (#d8b878)
+   Paleta extraída do brasão do Supremo Conclave do Brasil.
+   Mobile-first · alvos de toque >= 44px · contraste AA
+   ============================================================ */
+
+:root {
+  /* pergaminho (fundo) */
+  --ivory: #faf6ef;
+  --ivory-2: #f2e9da;
+  --paper: #ffffff;
+
+  /* vinho do brasão (texto e blocos de peso) */
+  --navy-975: #2c0a14;
+  --navy-950: #3a0f1c;
+  --navy-900: #581828;
+  --navy-800: #6d2035;
+  --ink: #3a1520;
+  --ink-soft: #5c3742;
+  --ink-faint: #715058;
+
+  /* dourados do brasão */
+  --gold: #c9a24b;
+  --gold-bright: #e6cd94;
+  --gold-aged: #8a6828;
+  --gold-aged-2: #9a7b2e;
+  --gold-line: rgba(154, 123, 46, 0.42);
+  --gold-faint: rgba(154, 123, 46, 0.10);
+
+  /* creme sobre vinho (rodapé, fab, plaquinha) */
+  --cream: #f5ecdd;
+  --cream-dim: #cdbfb2;
+
+  /* âmbar da tarja de restrição */
+  --amber: #8a5c12;
+  --amber-bg: rgba(200, 146, 44, 0.13);
+
+  /* tipografia */
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+
+  --radius: 10px;
+  --shadow-card: 0 4px 6px rgba(58, 21, 32, 0.05), 0 1px 3px rgba(58, 21, 32, 0.08);
+  --shadow-lift: 0 10px 22px rgba(58, 21, 32, 0.10), 0 2px 6px rgba(58, 21, 32, 0.08);
+  --maxw: 44rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  /* apenas um leve calor dourado no topo — sem textura repetida:
+     os motivos do Rio vivem em pontos de respiro escolhidos a dedo */
+  background-image:
+    radial-gradient(60rem 30rem at 50% -8rem, rgba(201, 162, 75, 0.09), transparent 60%);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  overflow-x: hidden; /* motifs decorativos podem sangrar nas bordas */
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--gold-aged); }
+button { font-family: inherit; }
+svg { display: block; }
+
+/* filetes decorativos reutilizáveis */
+.hairline {
+  height: 1px; border: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  margin: 0;
+}
+
+/* ============================================================
+   TARJA DE AVISO (in-page, avisos.json)
+   Fica logo abaixo do cabeçalho compacto, acima do cartão
+   Agora / A seguir. Destacada e dispensável (botão ×).
+   ============================================================ */
+.notice-bar {
+  background: linear-gradient(180deg, #faf3df, #f3e9cd);
+  border-top: 1px solid var(--gold-line);
+  border-bottom: 1px solid var(--gold-line);
+  box-shadow: 0 3px 8px rgba(20, 31, 60, 0.06);
+}
+.notice-inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 0.7rem 1rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem;
+  align-items: start;
+}
+.notice-label {
+  grid-column: 1 / -1;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold-aged);
+}
+.notice-label svg { width: 0.85rem; height: 0.85rem; fill: var(--gold-aged); }
+.notice-text { margin: 0; color: var(--ink); font-size: 1rem; }
+.notice-close {
+  background: none; border: 1px solid var(--gold-line); border-radius: 50%;
+  color: var(--gold-aged); width: 44px; height: 44px; min-width: 44px;
+  font-size: 1.25rem; line-height: 1; cursor: pointer;
+  align-self: center;
+  transition: background 0.2s;
+}
+.notice-close:hover { background: var(--gold-faint); }
+
+/* ============================================================
+   CABEÇALHO — brasão centralizado, título e plaqueta de datas
+   ============================================================ */
+.masthead {
+  position: relative;
+  padding: 0.4rem 1rem 0.35rem;
+  overflow: hidden;
+  text-align: center;
+}
+/* gravura de acácia e estrelas em linha dourada — bem sutil,
+   atrás do brasão/título, sem repetir e sem atrapalhar a leitura */
+.masthead::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  background: url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221200%22 height=%22240%22 viewBox=%220 0 1200 240%22 fill=%22none%22 stroke=%22%238a6828%22 stroke-width=%221.3%22 stroke-linecap=%22round%22%3E%0A%3Cpath d=%22M0,215 C300,175 900,175 1200,215%22 stroke-width=%221%22/%3E%3Cpath d=%22M0,228 C300,190 900,190 1200,228%22 stroke-width=%220.7%22/%3E%0A%3Cpath d=%22M40.0,190.0 l-27.0,-32.2 M35.5,184.6 q-0.0,-6.3 -0.4,-11.0 M35.5,184.6 q-6.2,-1.1 -10.7,-2.4 M31.0,179.3 q-0.1,-5.8 -0.6,-10.2 M31.0,179.3 q-5.7,-1.1 -9.9,-2.4 M26.5,173.9 q-0.3,-5.4 -0.9,-9.4 M26.5,173.9 q-5.2,-1.2 -9.1,-2.5 M22.0,168.5 q-0.4,-4.9 -1.1,-8.7 M22.0,168.5 q-4.8,-1.2 -8.3,-2.6 M17.5,163.2 q-0.5,-4.4 -1.3,-7.9 M17.5,163.2 q-4.3,-1.3 -7.6,-2.6%22/%3E%3Cpath d=%22M63.1,170.7 l-26.9,-32.3 M58.6,165.3 q0.0,-6.3 -0.4,-11.0 M58.6,165.3 q-6.2,-1.1 -10.7,-2.4 M54.1,160.0 q-0.1,-5.8 -0.6,-10.2 M54.1,160.0 q-5.7,-1.2 -9.9,-2.5 M49.6,154.6 q-0.2,-5.4 -0.8,-9.4 M49.6,154.6 q-5.2,-1.2 -9.1,-2.5 M45.2,149.2 q-0.4,-4.9 -1.0,-8.7 M45.2,149.2 q-4.7,-1.2 -8.3,-2.6 M40.7,143.8 q-0.5,-4.4 -1.2,-7.9 M40.7,143.8 q-4.3,-1.3 -7.5,-2.7%22/%3E%3Cpath d=%22M86.2,151.7 l-26.5,-32.6 M81.7,146.3 q0.1,-6.3 -0.3,-11.0 M81.7,146.3 q-6.2,-1.2 -10.7,-2.5 M77.3,140.8 q-0.0,-5.8 -0.5,-10.2 M77.3,140.8 q-5.7,-1.2 -9.9,-2.6 M72.9,135.4 q-0.2,-5.4 -0.7,-9.5 M72.9,135.4 q-5.2,-1.3 -9.1,-2.6 M68.5,130.0 q-0.3,-4.9 -0.9,-8.7 M68.5,130.0 q-4.7,-1.3 -8.3,-2.7 M64.1,124.6 q-0.4,-4.4 -1.2,-7.9 M64.1,124.6 q-4.3,-1.3 -7.5,-2.7%22/%3E%3Cpath d=%22M109.2,133.3 l-25.9,-33.1 M104.9,127.8 q0.2,-6.3 -0.1,-11.0 M104.9,127.8 q-6.1,-1.3 -10.7,-2.7 M100.6,122.2 q0.1,-5.8 -0.3,-10.2 M100.6,122.2 q-5.7,-1.3 -9.9,-2.8 M96.3,116.7 q-0.1,-5.4 -0.5,-9.5 M96.3,116.7 q-5.2,-1.4 -9.1,-2.8 M92.0,111.2 q-0.2,-4.9 -0.8,-8.7 M92.0,111.2 q-4.7,-1.4 -8.3,-2.8 M87.6,105.7 q-0.4,-4.4 -1.0,-7.9 M87.6,105.7 q-4.2,-1.4 -7.5,-2.9%22/%3E%3Cpath d=%22M132.3,115.6 l-25.0,-33.7 M128.1,110.0 q0.4,-6.3 0.2,-11.0 M128.1,110.0 q-6.1,-1.5 -10.6,-3.0 M124.0,104.4 q0.2,-5.8 -0.0,-10.2 M124.0,104.4 q-5.6,-1.5 -9.8,-3.0 M119.8,98.8 q0.1,-5.4 -0.3,-9.5 M119.8,98.8 q-5.2,-1.5 -9.0,-3.0 M115.6,93.2 q-0.1,-4.9 -0.5,-8.7 M115.6,93.2 q-4.7,-1.5 -8.2,-3.1 M111.5,87.5 q-0.2,-4.5 -0.8,-8.0 M111.5,87.5 q-4.2,-1.5 -7.4,-3.1%22/%3E%3Cpath d=%22M155.4,99.1 l-23.8,-34.6 M151.4,93.3 q0.6,-6.3 0.6,-11.0 M151.4,93.3 q-6.1,-1.7 -10.5,-3.4 M147.4,87.6 q0.4,-5.8 0.3,-10.2 M147.4,87.6 q-5.6,-1.7 -9.7,-3.3 M143.5,81.8 q0.2,-5.4 0.0,-9.5 M143.5,81.8 q-5.1,-1.7 -8.9,-3.3 M139.5,76.1 q0.1,-4.9 -0.2,-8.7 M139.5,76.1 q-4.6,-1.7 -8.1,-3.3 M135.5,70.3 q-0.1,-4.5 -0.5,-8.0 M135.5,70.3 q-4.1,-1.7 -7.3,-3.3%22/%3E%3Cpath d=%22M178.5,83.9 l-22.3,-35.6 M174.7,78.0 q0.9,-6.2 1.1,-10.9 M174.7,78.0 q-6.0,-1.9 -10.3,-3.8 M171.0,72.0 q0.7,-5.8 0.8,-10.2 M171.0,72.0 q-5.5,-1.9 -9.5,-3.8 M167.3,66.1 q0.5,-5.3 0.4,-9.5 M167.3,66.1 q-5.0,-1.9 -8.7,-3.7 M163.6,60.2 q0.3,-4.9 0.1,-8.7 M163.6,60.2 q-4.5,-1.9 -7.9,-3.7 M159.9,54.2 q0.1,-4.5 -0.2,-8.0 M159.9,54.2 q-4.1,-1.8 -7.1,-3.6%22/%3E%3Cpath d=%22M201.5,70.2 l-20.4,-36.7 M198.1,64.1 q1.2,-6.2 1.6,-10.9 M198.1,64.1 q-5.9,-2.3 -10.1,-4.3 M194.7,58.0 q1.0,-5.7 1.3,-10.2 M194.7,58.0 q-5.4,-2.2 -9.3,-4.3 M191.3,51.9 q0.8,-5.3 0.9,-9.4 M191.3,51.9 q-4.9,-2.2 -8.5,-4.2 M187.9,45.8 q0.6,-4.9 0.6,-8.7 M187.9,45.8 q-4.4,-2.1 -7.7,-4.1 M184.5,39.6 q0.3,-4.4 0.2,-8.0 M184.5,39.6 q-4.0,-2.1 -6.9,-4.0%22/%3E%3Cpath d=%22M224.6,58.3 l-18.0,-37.9 M221.6,52.0 q1.6,-6.1 2.3,-10.7 M221.6,52.0 q-5.7,-2.6 -9.8,-5.0 M218.6,45.7 q1.3,-5.7 1.9,-10.0 M218.6,45.7 q-5.2,-2.5 -9.0,-4.8 M215.6,39.4 q1.1,-5.3 1.5,-9.4 M215.6,39.4 q-4.8,-2.5 -8.2,-4.7 M212.6,33.0 q0.9,-4.8 1.1,-8.7 M212.6,33.0 q-4.3,-2.4 -7.4,-4.6 M209.6,26.7 q0.6,-4.4 0.7,-8.0 M209.6,26.7 q-3.8,-2.3 -6.6,-4.4%22/%3E%3Cpath d=%22M247.7,48.3 l-15.2,-39.1 M245.2,41.8 q2.0,-6.0 3.1,-10.5 M245.2,41.8 q-5.5,-3.0 -9.4,-5.7 M242.6,35.3 q1.7,-5.6 2.7,-9.9 M242.6,35.3 q-5.0,-2.9 -8.6,-5.5 M240.1,28.8 q1.5,-5.2 2.2,-9.2 M240.1,28.8 q-4.6,-2.8 -7.9,-5.3 M237.5,22.2 q1.2,-4.8 1.8,-8.6 M237.5,22.2 q-4.1,-2.7 -7.1,-5.1 M235.0,15.7 q0.9,-4.4 1.3,-7.9 M235.0,15.7 q-3.6,-2.6 -6.3,-4.9%22/%3E%3Cpath d=%22M270.8,40.4 l-12.0,-40.3 M268.8,33.7 q2.5,-5.8 4.0,-10.3 M268.8,33.7 q-5.2,-3.5 -8.9,-6.4 M266.8,27.0 q2.2,-5.4 3.5,-9.6 M266.8,27.0 q-4.8,-3.3 -8.2,-6.2 M264.8,20.3 q1.9,-5.0 3.0,-9.0 M264.8,20.3 q-4.3,-3.2 -7.4,-5.9 M262.8,13.6 q1.6,-4.6 2.5,-8.4 M262.8,13.6 q-3.9,-3.0 -6.6,-5.7 M260.8,6.8 q1.3,-4.3 2.0,-7.7 M260.8,6.8 q-3.4,-2.9 -5.9,-5.4%22/%3E%3Cpath d=%22M293.8,34.6 l-8.3,-41.2 M292.5,27.8 q3.0,-5.5 4.9,-9.9 M292.5,27.8 q-4.9,-3.9 -8.3,-7.2 M291.1,20.9 q2.7,-5.2 4.3,-9.3 M291.1,20.9 q-4.5,-3.7 -7.6,-6.9 M289.7,14.1 q2.3,-4.8 3.8,-8.7 M289.7,14.1 q-4.0,-3.6 -6.8,-6.6 M288.3,7.2 q2.0,-4.5 3.2,-8.1 M288.3,7.2 q-3.6,-3.4 -6.1,-6.2 M287.0,0.3 q1.7,-4.1 2.7,-7.5 M287.0,0.3 q-3.1,-3.2 -5.4,-5.9%22/%3E%3Cpath d=%22M316.9,31.2 l-4.2,-41.8 M316.2,24.2 q3.5,-5.2 5.8,-9.3 M316.2,24.2 q-4.5,-4.4 -7.6,-8.0 M315.5,17.2 q3.2,-4.9 5.2,-8.8 M315.5,17.2 q-4.1,-4.2 -6.9,-7.6 M314.8,10.3 q2.8,-4.6 4.6,-8.3 M314.8,10.3 q-3.7,-3.9 -6.2,-7.2 M314.1,3.3 q2.4,-4.3 4.0,-7.8 M314.1,3.3 q-3.2,-3.7 -5.5,-6.8 M313.4,-3.7 q2.1,-3.9 3.4,-7.2 M313.4,-3.7 q-2.8,-3.5 -4.8,-6.4%22/%3E%3Cpath d=%22M340.0,30.0 l0.0,-42.0 M340.0,23.0 q4.0,-4.8 6.7,-8.7 M340.0,23.0 q-4.0,-4.8 -6.7,-8.7 M340.0,16.0 q3.6,-4.5 6.1,-8.2 M340.0,16.0 q-3.6,-4.5 -6.1,-8.2 M340.0,9.0 q3.2,-4.3 5.4,-7.8 M340.0,9.0 q-3.2,-4.3 -5.4,-7.8 M340.0,2.0 q2.9,-4.0 4.8,-7.3 M340.0,2.0 q-2.9,-4.0 -4.8,-7.3 M340.0,-5.0 q2.5,-3.7 4.1,-6.9 M340.0,-5.0 q-2.5,-3.7 -4.1,-6.9%22/%3E%3Cpath d=%22M1160.0,190.0 l27.0,-32.2 M1164.5,184.6 q6.2,-1.1 10.7,-2.4 M1164.5,184.6 q0.0,-6.3 0.4,-11.0 M1169.0,179.3 q5.7,-1.1 9.9,-2.4 M1169.0,179.3 q0.1,-5.8 0.6,-10.2 M1173.5,173.9 q5.2,-1.2 9.1,-2.5 M1173.5,173.9 q0.3,-5.4 0.9,-9.4 M1178.0,168.5 q4.8,-1.2 8.3,-2.6 M1178.0,168.5 q0.4,-4.9 1.1,-8.7 M1182.5,163.2 q4.3,-1.3 7.6,-2.6 M1182.5,163.2 q0.5,-4.4 1.3,-7.9%22/%3E%3Cpath d=%22M1136.9,170.7 l26.9,-32.3 M1141.4,165.3 q6.2,-1.1 10.7,-2.4 M1141.4,165.3 q-0.0,-6.3 0.4,-11.0 M1145.9,160.0 q5.7,-1.2 9.9,-2.5 M1145.9,160.0 q0.1,-5.8 0.6,-10.2 M1150.4,154.6 q5.2,-1.2 9.1,-2.5 M1150.4,154.6 q0.2,-5.4 0.8,-9.4 M1154.8,149.2 q4.7,-1.2 8.3,-2.6 M1154.8,149.2 q0.4,-4.9 1.0,-8.7 M1159.3,143.8 q4.3,-1.3 7.5,-2.7 M1159.3,143.8 q0.5,-4.4 1.2,-7.9%22/%3E%3Cpath d=%22M1113.8,151.7 l26.5,-32.6 M1118.3,146.3 q6.2,-1.2 10.7,-2.5 M1118.3,146.3 q-0.1,-6.3 0.3,-11.0 M1122.7,140.8 q5.7,-1.2 9.9,-2.6 M1122.7,140.8 q0.0,-5.8 0.5,-10.2 M1127.1,135.4 q5.2,-1.3 9.1,-2.6 M1127.1,135.4 q0.2,-5.4 0.7,-9.5 M1131.5,130.0 q4.7,-1.3 8.3,-2.7 M1131.5,130.0 q0.3,-4.9 0.9,-8.7 M1135.9,124.6 q4.3,-1.3 7.5,-2.7 M1135.9,124.6 q0.4,-4.4 1.2,-7.9%22/%3E%3Cpath d=%22M1090.8,133.3 l25.9,-33.1 M1095.1,127.8 q6.1,-1.3 10.7,-2.7 M1095.1,127.8 q-0.2,-6.3 0.1,-11.0 M1099.4,122.2 q5.7,-1.3 9.9,-2.8 M1099.4,122.2 q-0.1,-5.8 0.3,-10.2 M1103.7,116.7 q5.2,-1.4 9.1,-2.8 M1103.7,116.7 q0.1,-5.4 0.5,-9.5 M1108.0,111.2 q4.7,-1.4 8.3,-2.8 M1108.0,111.2 q0.2,-4.9 0.8,-8.7 M1112.4,105.7 q4.2,-1.4 7.5,-2.9 M1112.4,105.7 q0.4,-4.4 1.0,-7.9%22/%3E%3Cpath d=%22M1067.7,115.6 l25.0,-33.7 M1071.9,110.0 q6.1,-1.5 10.6,-3.0 M1071.9,110.0 q-0.4,-6.3 -0.2,-11.0 M1076.0,104.4 q5.6,-1.5 9.8,-3.0 M1076.0,104.4 q-0.2,-5.8 0.0,-10.2 M1080.2,98.8 q5.2,-1.5 9.0,-3.0 M1080.2,98.8 q-0.1,-5.4 0.3,-9.5 M1084.4,93.2 q4.7,-1.5 8.2,-3.1 M1084.4,93.2 q0.1,-4.9 0.5,-8.7 M1088.5,87.5 q4.2,-1.5 7.4,-3.1 M1088.5,87.5 q0.2,-4.5 0.8,-8.0%22/%3E%3Cpath d=%22M1044.6,99.1 l23.8,-34.6 M1048.6,93.3 q6.1,-1.7 10.5,-3.4 M1048.6,93.3 q-0.6,-6.3 -0.6,-11.0 M1052.6,87.6 q5.6,-1.7 9.7,-3.3 M1052.6,87.6 q-0.4,-5.8 -0.3,-10.2 M1056.5,81.8 q5.1,-1.7 8.9,-3.3 M1056.5,81.8 q-0.2,-5.4 -0.0,-9.5 M1060.5,76.1 q4.6,-1.7 8.1,-3.3 M1060.5,76.1 q-0.1,-4.9 0.2,-8.7 M1064.5,70.3 q4.1,-1.7 7.3,-3.3 M1064.5,70.3 q0.1,-4.5 0.5,-8.0%22/%3E%3Cpath d=%22M1021.5,83.9 l22.3,-35.6 M1025.3,78.0 q6.0,-1.9 10.3,-3.8 M1025.3,78.0 q-0.9,-6.2 -1.1,-10.9 M1029.0,72.0 q5.5,-1.9 9.5,-3.8 M1029.0,72.0 q-0.7,-5.8 -0.8,-10.2 M1032.7,66.1 q5.0,-1.9 8.7,-3.7 M1032.7,66.1 q-0.5,-5.3 -0.4,-9.5 M1036.4,60.2 q4.5,-1.9 7.9,-3.7 M1036.4,60.2 q-0.3,-4.9 -0.1,-8.7 M1040.1,54.2 q4.1,-1.8 7.1,-3.6 M1040.1,54.2 q-0.1,-4.5 0.2,-8.0%22/%3E%3Cpath d=%22M998.5,70.2 l20.4,-36.7 M1001.9,64.1 q5.9,-2.3 10.1,-4.3 M1001.9,64.1 q-1.2,-6.2 -1.6,-10.9 M1005.3,58.0 q5.4,-2.2 9.3,-4.3 M1005.3,58.0 q-1.0,-5.7 -1.3,-10.2 M1008.7,51.9 q4.9,-2.2 8.5,-4.2 M1008.7,51.9 q-0.8,-5.3 -0.9,-9.4 M1012.1,45.8 q4.4,-2.1 7.7,-4.1 M1012.1,45.8 q-0.6,-4.9 -0.6,-8.7 M1015.5,39.6 q4.0,-2.1 6.9,-4.0 M1015.5,39.6 q-0.3,-4.4 -0.2,-8.0%22/%3E%3Cpath d=%22M975.4,58.3 l18.0,-37.9 M978.4,52.0 q5.7,-2.6 9.8,-5.0 M978.4,52.0 q-1.6,-6.1 -2.3,-10.7 M981.4,45.7 q5.2,-2.5 9.0,-4.8 M981.4,45.7 q-1.3,-5.7 -1.9,-10.0 M984.4,39.4 q4.8,-2.5 8.2,-4.7 M984.4,39.4 q-1.1,-5.3 -1.5,-9.4 M987.4,33.0 q4.3,-2.4 7.4,-4.6 M987.4,33.0 q-0.9,-4.8 -1.1,-8.7 M990.4,26.7 q3.8,-2.3 6.6,-4.4 M990.4,26.7 q-0.6,-4.4 -0.7,-8.0%22/%3E%3Cpath d=%22M952.3,48.3 l15.2,-39.1 M954.8,41.8 q5.5,-3.0 9.4,-5.7 M954.8,41.8 q-2.0,-6.0 -3.1,-10.5 M957.4,35.3 q5.0,-2.9 8.6,-5.5 M957.4,35.3 q-1.7,-5.6 -2.7,-9.9 M959.9,28.8 q4.6,-2.8 7.9,-5.3 M959.9,28.8 q-1.5,-5.2 -2.2,-9.2 M962.5,22.2 q4.1,-2.7 7.1,-5.1 M962.5,22.2 q-1.2,-4.8 -1.8,-8.6 M965.0,15.7 q3.6,-2.6 6.3,-4.9 M965.0,15.7 q-0.9,-4.4 -1.3,-7.9%22/%3E%3Cpath d=%22M929.2,40.4 l12.0,-40.3 M931.2,33.7 q5.2,-3.5 8.9,-6.4 M931.2,33.7 q-2.5,-5.8 -4.0,-10.3 M933.2,27.0 q4.8,-3.3 8.2,-6.2 M933.2,27.0 q-2.2,-5.4 -3.5,-9.6 M935.2,20.3 q4.3,-3.2 7.4,-5.9 M935.2,20.3 q-1.9,-5.0 -3.0,-9.0 M937.2,13.6 q3.9,-3.0 6.6,-5.7 M937.2,13.6 q-1.6,-4.6 -2.5,-8.4 M939.2,6.8 q3.4,-2.9 5.9,-5.4 M939.2,6.8 q-1.3,-4.3 -2.0,-7.7%22/%3E%3Cpath d=%22M906.2,34.6 l8.3,-41.2 M907.5,27.8 q4.9,-3.9 8.3,-7.2 M907.5,27.8 q-3.0,-5.5 -4.9,-9.9 M908.9,20.9 q4.5,-3.7 7.6,-6.9 M908.9,20.9 q-2.7,-5.2 -4.3,-9.3 M910.3,14.1 q4.0,-3.6 6.8,-6.6 M910.3,14.1 q-2.3,-4.8 -3.8,-8.7 M911.7,7.2 q3.6,-3.4 6.1,-6.2 M911.7,7.2 q-2.0,-4.5 -3.2,-8.1 M913.0,0.3 q3.1,-3.2 5.4,-5.9 M913.0,0.3 q-1.7,-4.1 -2.7,-7.5%22/%3E%3Cpath d=%22M883.1,31.2 l4.2,-41.8 M883.8,24.2 q4.5,-4.4 7.6,-8.0 M883.8,24.2 q-3.5,-5.2 -5.8,-9.3 M884.5,17.2 q4.1,-4.2 6.9,-7.6 M884.5,17.2 q-3.2,-4.9 -5.2,-8.8 M885.2,10.3 q3.7,-3.9 6.2,-7.2 M885.2,10.3 q-2.8,-4.6 -4.6,-8.3 M885.9,3.3 q3.2,-3.7 5.5,-6.8 M885.9,3.3 q-2.4,-4.3 -4.0,-7.8 M886.6,-3.7 q2.8,-3.5 4.8,-6.4 M886.6,-3.7 q-2.1,-3.9 -3.4,-7.2%22/%3E%3Cpath d=%22M860.0,30.0 l-0.0,-42.0 M860.0,23.0 q4.0,-4.8 6.7,-8.7 M860.0,23.0 q-4.0,-4.8 -6.7,-8.7 M860.0,16.0 q3.6,-4.5 6.1,-8.2 M860.0,16.0 q-3.6,-4.5 -6.1,-8.2 M860.0,9.0 q3.2,-4.3 5.4,-7.8 M860.0,9.0 q-3.2,-4.3 -5.4,-7.8 M860.0,2.0 q2.9,-4.0 4.8,-7.3 M860.0,2.0 q-2.9,-4.0 -4.8,-7.3 M860.0,-5.0 q2.5,-3.7 4.1,-6.9 M860.0,-5.0 q-2.5,-3.7 -4.1,-6.9%22/%3E%0A%3Cpath d=%22M70.0,50.0 L74.3,69.0 L62.2,53.8 L79.7,62.2 L60.3,62.2 L77.8,53.8 L65.7,69.0 Z%22/%3E%3Cpath d=%22M1130.0,50.0 L1134.3,69.0 L1122.2,53.8 L1139.7,62.2 L1120.3,62.2 L1137.8,53.8 L1125.7,69.0 Z%22/%3E%3Cpath d=%22M330.0,24.0 L332.6,35.4 L325.3,26.3 L335.8,31.3 L324.2,31.3 L334.7,26.3 L327.4,35.4 Z%22/%3E%3Cpath d=%22M870.0,24.0 L872.6,35.4 L865.3,26.3 L875.8,31.3 L864.2,31.3 L874.7,26.3 L867.4,35.4 Z%22/%3E%0A%3C/svg%3E") center 55% / 1200px auto no-repeat;
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.lang-switch {
+  display: flex; justify-content: flex-end; gap: 0.35rem;
+  max-width: var(--maxw); margin: 0 auto 0.15rem;
+}
+.lang-switch button {
+  min-width: 44px; min-height: 34px; padding: 0.2rem 0.55rem;
+  background: transparent; color: var(--ink-soft);
+  border: 1px solid transparent; border-radius: 999px;
+  font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.12em;
+  cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.lang-switch button:hover { color: var(--gold-aged); }
+.lang-switch button.is-active {
+  color: var(--gold-aged); border-color: var(--gold-line);
+  background: var(--gold-faint);
+}
+
+/* cabeçalho horizontal: brasão à esquerda, bloco de títulos à direita,
+   conjunto alinhado ao centro vertical e centralizado na página */
+.masthead-row {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+  gap: clamp(0.3rem, 1.5vw, 0.7rem);
+}
+.medallion-wrap { flex: none; }
+.medallion {
+  --medal-w: clamp(144px, 38vw, 226px);
+  width: var(--medal-w); height: auto;
+  /* remove o quadrado branco do PNG: o branco funde no marfim do fundo */
+  mix-blend-mode: multiply;
+  /* a arte do PNG tem ~15–18% de respiro transparente em volta da moeda;
+     margens negativas proporcionais compensam esse vazio embutido sem
+     reduzir a moeda visível (o cabeçalho fica justo, sem buraco) */
+  margin: calc(var(--medal-w) * -0.10) calc(var(--medal-w) * -0.13);
+}
+.masthead-titles { min-width: 0; text-align: center; }
+
+/* linha "AMD · RCC · OSM" em versalete dourado, entre filetes finos
+   (gesto de assinatura do conceito), logo acima do título */
+.masthead-sigla {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.65rem;
+  margin: 0 0 0.4rem;
+}
+.masthead-sigla::before, .masthead-sigla::after {
+  content: ''; flex: 1; max-width: 3.6rem; height: 1px;
+}
+.masthead-sigla::before { background: linear-gradient(90deg, transparent, var(--gold-line)); }
+.masthead-sigla::after { background: linear-gradient(270deg, transparent, var(--gold-line)); }
+.masthead-sigla span {
+  white-space: nowrap;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(0.6rem, 2.4vw, 0.72rem);
+  letter-spacing: 0.28em; text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-aged);
+}
+
+@media (max-width: 599px) {
+  .medallion { --medal-w: clamp(115px, 31vw, 156px); }
+}
+
+.masthead h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.25rem, 5vw, 1.8rem);
+  letter-spacing: 0.06em; line-height: 1.12;
+  color: var(--navy-900);
+  text-wrap: balance;
+}
+/* última palavra do título ("Oficial") no dourado envelhecido do conceito
+   (--ouro-tinta do conceito = #8a6828 = --gold-aged; AA sobre marfim) */
+.masthead h1 .title-accent { color: var(--gold-aged); }
+
+/* plaqueta de datas — placa marinho do crachá, com filetes-flourish
+   e pontas em losango dourado nas laterais */
+.date-plaque-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.75rem;
+}
+.date-plaque-row::before, .date-plaque-row::after {
+  content: ''; flex: none;
+  width: clamp(1.4rem, 7vw, 2.8rem); height: 1px;
+}
+.date-plaque-row::before {
+  background: linear-gradient(90deg, transparent, var(--gold-line));
+}
+.date-plaque-row::after {
+  background: linear-gradient(270deg, transparent, var(--gold-line));
+}
+.date-plaque {
+  display: inline-block; position: relative;
+  padding: 0.42rem 1.35rem 0.46rem;
+  background: linear-gradient(180deg, var(--navy-800), var(--navy-950));
+  border: 1px solid rgba(201, 162, 75, 0.7);
+  /* filete dourado interno (moldura dupla, como na placa do crachá) */
+  box-shadow:
+    inset 0 0 0 2.5px var(--navy-900),
+    inset 0 0 0 3.5px rgba(233, 205, 133, 0.45),
+    0 3px 10px rgba(16, 31, 60, 0.22);
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(0.78rem, 3.1vw, 0.98rem); letter-spacing: 0.14em;
+  color: var(--gold-bright);
+}
+/* pontas em losango dourado */
+.date-plaque::before, .date-plaque::after {
+  content: ''; position: absolute; top: 50%; width: 8px; height: 8px;
+  background: var(--gold); border: 1px solid rgba(16, 31, 60, 0.35);
+  transform: translateY(-50%) rotate(45deg);
+}
+.date-plaque::before { left: -4.5px; }
+.date-plaque::after { right: -4.5px; }
+
+/* linha de lugar sob a plaqueta — versalete dourado discreto */
+.masthead-place {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(0.58rem, 2.3vw, 0.7rem);
+  letter-spacing: 0.24em; text-indent: 0.24em; text-transform: uppercase;
+  color: var(--gold-aged); opacity: 0.9;
+}
+.medallion { filter: drop-shadow(0 6px 14px rgba(58, 21, 32, 0.22)); }
+
+/* telas muito estreitas: empilha o cabeçalho (padrão é lado a lado) */
+@media (max-width: 349px) {
+  .masthead-row { flex-direction: column; gap: 0.5rem; }
+  .masthead-titles { text-align: center; }
+  .date-plaque-row { justify-content: center; }
+}
+
+/* ============================================================
+   CONTEÚDO
+   ============================================================ */
+main {
+  position: relative; /* ancora os motifs decorativos do Rio */
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1rem 6.5rem;
+}
+/* ramos de acácia + estrela do brasão — textura MUITO sutil por
+   trás do corpo da página; os cartões brancos cobrem a textura, então
+   ela só respira nos vãos de marfim (legibilidade preservada) */
+main::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22220%22 height=%22220%22 viewBox=%220 0 220 220%22 fill=%22none%22 stroke=%22%238a6828%22 stroke-width=%221.1%22 stroke-linecap=%22round%22%3E%0A%3Cpath d=%22M20.0,150.0 l41.4,-34.7 M26.9,144.2 q6.3,-0.0 11.0,-0.4 M26.9,144.2 q1.1,-6.2 2.3,-10.7 M33.8,138.4 q5.8,-0.1 10.2,-0.7 M33.8,138.4 q1.1,-5.7 2.4,-9.9 M40.7,132.6 q5.4,-0.3 9.4,-0.9 M40.7,132.6 q1.2,-5.2 2.5,-9.1 M47.6,126.9 q4.9,-0.4 8.7,-1.1 M47.6,126.9 q1.2,-4.8 2.6,-8.3 M54.5,121.1 q4.4,-0.5 7.9,-1.3 M54.5,121.1 q1.3,-4.3 2.6,-7.6%22/%3E%3Cpath d=%22M130.0,205.0 l41.4,-34.7 M136.9,199.2 q6.3,-0.0 11.0,-0.4 M136.9,199.2 q1.1,-6.2 2.3,-10.7 M143.8,193.4 q5.8,-0.1 10.2,-0.7 M143.8,193.4 q1.1,-5.7 2.4,-9.9 M150.7,187.6 q5.4,-0.3 9.4,-0.9 M150.7,187.6 q1.2,-5.2 2.5,-9.1 M157.6,181.9 q4.9,-0.4 8.7,-1.1 M157.6,181.9 q1.2,-4.8 2.6,-8.3 M164.5,176.1 q4.4,-0.5 7.9,-1.3 M164.5,176.1 q1.3,-4.3 2.6,-7.6%22/%3E%3Cpath d=%22M140.0,40.0 l-41.4,-34.7 M133.1,34.2 q-1.1,-6.2 -2.3,-10.7 M133.1,34.2 q-6.3,-0.0 -11.0,-0.4 M126.2,28.4 q-1.1,-5.7 -2.4,-9.9 M126.2,28.4 q-5.8,-0.1 -10.2,-0.7 M119.3,22.6 q-1.2,-5.2 -2.5,-9.1 M119.3,22.6 q-5.4,-0.3 -9.4,-0.9 M112.4,16.9 q-1.2,-4.8 -2.6,-8.3 M112.4,16.9 q-4.9,-0.4 -8.7,-1.1 M105.5,11.1 q-1.3,-4.3 -2.6,-7.6 M105.5,11.1 q-4.4,-0.5 -7.9,-1.3%22/%3E%0A%3Cpath d=%22M110.0,97.0 L115.6,121.7 L99.8,101.9 L122.7,112.9 L97.3,112.9 L120.2,101.9 L104.4,121.7 Z%22/%3E%3Cpath d=%22M20.0,18.0 L23.0,31.3 L14.5,20.6 L26.8,26.6 L13.2,26.6 L25.5,20.6 L17.0,31.3 Z%22/%3E%3Cpath d=%22M200.0,183.0 L203.0,196.3 L194.5,185.6 L206.8,191.6 L193.2,191.6 L205.5,185.6 L197.0,196.3 Z%22/%3E%0A%3C/svg%3E") repeat center top;
+  background-size: 220px auto;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* ---------- cartão AGORA / A SEGUIR ---------- */
+.now-card {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-lift);
+  padding: 0.95rem 1.1rem 1.05rem;
+  margin: 0.65rem 0 1.3rem;
+}
+/* estado de contagem regressiva: faixa fina, sem bloco gigante,
+   com todo o conteúdo (rótulo, números e data) centralizado */
+.now-card.is-countdown { padding: 0.6rem 1rem 0.65rem; text-align: center; }
+.now-card.is-countdown::before, .now-card.is-countdown::after { display: none; }
+.countdown-strip {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: center;
+  column-gap: 0.75rem; row-gap: 0.05rem;
+}
+.countdown-strip .now-status { margin-bottom: 0; }
+.countdown-strip .now-meta { font-size: 0.92rem; }
+/* cantos ornamentais em dourado envelhecido */
+.now-card::before, .now-card::after {
+  content: ''; position: absolute; width: 14px; height: 14px;
+  border-color: var(--gold-aged-2); border-style: solid; opacity: 0.8;
+}
+.now-card::before { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
+.now-card::after { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+
+.now-status {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold-aged);
+  margin-bottom: 0.5rem;
+}
+.now-status.is-live { color: var(--gold-aged); }
+.now-status.is-next { color: var(--ink-faint); margin-bottom: 0.3rem; }
+
+/* bolinha "Agora" — pulsa o tamanho, não a sombra */
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold-aged-2);
+  box-shadow: 0 0 0 3px rgba(154, 123, 46, 0.16);
+  animation: pulse 1.8s ease-in-out infinite;
+  flex: none;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.now-title {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: 1.35rem; line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.now-next-title {
+  margin: 0 0 0.2rem;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: 1.1rem; line-height: 1.3; color: var(--ink);
+}
+.now-meta { margin: 0; font-size: 0.95rem; color: var(--ink-soft); }
+.now-meta strong { color: var(--gold-aged); font-variant-numeric: tabular-nums; }
+.now-sub { margin: 0.35rem 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+.now-sub strong { color: var(--gold-aged); font-variant-numeric: tabular-nums; }
+
+.now-next.has-rule {
+  margin-top: 0.9rem; padding-top: 0.9rem;
+  border-top: 1px solid rgba(154, 123, 46, 0.22);
+}
+
+/* Contagem regressiva — família única (Source Serif 4): algarismos
+   tabulares em destaque, unidades em versalete bronze do mesmo corpo
+   tipográfico. Cada valor que muda entra com micro-animação (.cd-anim,
+   aplicada pelo app.js só ao grupo que mudou). */
+.now-countdown {
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(1.25rem, 5vw, 1.55rem);
+  letter-spacing: 0.01em; color: var(--navy-900);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.cd-num { display: inline-block; font-variant-numeric: tabular-nums; }
+.cd-unit {
+  display: inline-block;
+  font-size: 1em; font-weight: 600;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.06em;
+  color: inherit;
+  margin-left: 0.14em;
+}
+.cd-colon { opacity: 0.45; padding: 0 0.02em; }
+/* valor recém-atualizado desliza suavemente para o lugar */
+.cd-anim { animation: cd-in 0.45s cubic-bezier(0.2, 0.7, 0.3, 1); }
+@keyframes cd-in {
+  from { opacity: 0; transform: translateY(-0.22em); }
+  to   { opacity: 1; transform: none; }
+}
+/* respiro lento e sutil na faixa de contagem para a abertura */
+.now-card.is-countdown .now-countdown { animation: cd-breathe 4.5s ease-in-out infinite; }
+@keyframes cd-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.86; }
+}
+/* dentro do "termina em / começa em" o conjunto herda o dourado */
+.now-meta strong .cd-unit, .now-sub strong .cd-unit { color: inherit; opacity: 0.75; }
+.now-rule {
+  height: 1px; margin: 0.6rem auto;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  max-width: 12rem;
+}
+.now-closed-msg { margin: 0; font-size: 1rem; color: var(--ink-soft); }
+.now-closed-motto {
+  margin: 0; font-family: var(--font-display); font-size: 0.72rem;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-aged);
+}
+
+/* ---------- barra de ações — centrada mesmo ao quebrar linha ---------- */
+/* #btnPush: visibilidade controlada pelo app.js (atributo hidden):
+   aparece só com o App ID do OneSignal configurado em data.js. */
+#btnShare { padding: 0.25rem 0.55rem; }
+#btnShare .btn-label { display: none; }
+.actions {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+  gap: 0.5rem;
+  max-width: 33rem;
+  margin: 0 auto 1rem;
+}
+.action-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.4rem;
+  min-height: 40px; padding: 0.25rem 0.85rem;
+  background: var(--paper); color: var(--ink-soft);
+  border: 0; border-radius: 999px;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-body); font-size: 0.9rem;
+  text-decoration: none; cursor: pointer;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.action-btn svg { width: 1rem; height: 1rem; fill: currentColor; flex: none; }
+.action-btn:hover {
+  color: var(--gold-aged); background: #fffdf6;
+  box-shadow: var(--shadow-lift); transform: translateY(-1px);
+}
+.action-btn:active { transform: translateY(0); }
+.action-btn.is-on { color: var(--gold-aged); box-shadow: var(--shadow-card), inset 0 0 0 1px var(--gold-line); }
+
+/* ---------- linha de visões: alternador + agenda completa (.ics) ---------- */
+.view-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: center; gap: 0.6rem 0.8rem;
+  margin-bottom: 0.4rem;
+}
+/* agenda completa na linha de views: "Google Agenda · Agenda (.ics)" —
+   mesmo padrão compacto dos cartões (.cal-links), em pílula discreta */
+.cal-links-all {
+  min-height: 44px; padding: 0 0.65rem;
+  border: 1px solid var(--gold-line); border-radius: 999px;
+  gap: 0.35rem;
+}
+.cal-links-all .cal-link { min-height: 44px; font-size: 0.88rem; }
+
+.view-toggle {
+  display: flex; gap: 0;
+  background: var(--ivory-2);
+  border-radius: 999px; padding: 3px;
+  box-shadow: inset 0 1px 2px rgba(20, 31, 60, 0.06);
+  overflow: hidden; width: fit-content;
+}
+.view-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  min-height: 44px; padding: 0.4rem 1.1rem;
+  background: transparent; border: 0; border-radius: 999px; cursor: pointer;
+  color: var(--ink-soft); font-family: var(--font-body); font-size: 0.95rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.view-btn.is-active { background: var(--paper); color: var(--ink); box-shadow: var(--shadow-card); }
+.view-star svg { width: 0.85rem; height: 0.85rem; fill: currentColor; }
+.view-count {
+  font-size: 0.8rem; min-width: 1.35rem; text-align: center;
+  border: 1px solid var(--gold-line); border-radius: 999px; padding: 0 0.3rem;
+  color: var(--gold-aged);
+}
+
+/* ---------- legenda de cores por rito (recolhível e discreta) ---------- */
+.body-legend { margin: 0 0 0.4rem; text-align: center; }
+.body-legend summary {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.4rem; min-height: 44px; padding: 0.15rem 0.8rem;
+  margin: 0 auto; width: fit-content;
+  cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-size: 0.64rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.2s;
+}
+.body-legend summary::-webkit-details-marker { display: none; }
+.body-legend summary::after {
+  content: ''; width: 7px; height: 7px; flex: none;
+  border-right: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s;
+}
+.body-legend[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+.body-legend summary:hover { color: var(--gold-aged); }
+.legend-items {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.4rem; padding: 0.1rem 0 0.25rem;
+}
+/* chips preenchidos na cor do rito (espelham os cartões da grade) */
+.legend-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.26rem 0.7rem;
+  border: 0; border-radius: 999px;
+  color: #fdfcf8;
+  background: var(--body-color, var(--ink-faint));
+  font-family: var(--font-display); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.legend-chip.is-log {
+  color: #64748b;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed #94a3b8;
+}
+.legend-icon svg { width: 0.85rem; height: 0.85rem; }
+
+/* ---------- abas por dia ---------- */
+.day-tabs {
+  display: flex; gap: 0.4rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  padding: 2px 2px 0.5rem; margin-bottom: 1.25rem;
+  scrollbar-width: none;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  flex: 1 0 auto; min-width: 60px; min-height: 60px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.05rem; padding: 0.4rem 0.8rem;
+  background: var(--paper); cursor: pointer;
+  border: 0; border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  color: var(--ink-soft);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.day-tab-wd {
+  font-family: var(--font-display); font-size: 0.66rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.day-tab-num { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; line-height: 1; }
+.day-tab:hover { color: var(--gold-aged); box-shadow: var(--shadow-lift); transform: translateY(-1px); }
+.day-tab:active { transform: translateY(0); }
+/* aba ativa: plaquinha marinho com dourado brilhante, como no crachá */
+.day-tab.is-active {
+  background: linear-gradient(180deg, var(--navy-800), var(--navy-950));
+  color: var(--gold-bright);
+  box-shadow: 0 6px 14px rgba(16, 31, 60, 0.28);
+  transform: none;
+}
+.day-tab.is-vesper .day-tab-wd::after { content: ' ·'; opacity: 0.6; }
+/* rótulo minúsculo "preliminares" na aba do dia 26 (véspera) —
+   segunda linha discreta em versalete bronze, sem inflar a aba */
+.day-tab-mini {
+  font-family: var(--font-body); font-weight: 600;
+  font-size: 0.6rem; line-height: 1.1;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.05em;
+  color: var(--gold-aged);
+  margin-top: 0.06rem;
+  white-space: nowrap;
+}
+/* na plaquinha marinho ativa, o bronze não contrasta: sobe para o dourado claro */
+.day-tab.is-active .day-tab-mini { color: var(--gold-bright); opacity: 0.9; }
+
+/* ---------- seção do dia ---------- */
+.day-section { margin-bottom: 2rem; }
+.day-header {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.7rem;
+  margin-bottom: 1rem;
+}
+.day-title {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 1.05rem; letter-spacing: 0.1em;
+  color: var(--navy-900);
+}
+.day-header::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--gold-line), transparent);
+}
+/* subtítulo do dia de véspera (26/08): versalete bronze, discreto */
+.vesper-tag {
+  font-size: 0.8rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--gold-aged);
+  border: 1px solid rgba(154, 123, 46, 0.35); border-radius: 999px;
+  padding: 0.02rem 0.6rem;
+}
+
+/* ---------- linha do tempo ---------- */
+.timeline { list-style: none; margin: 0; padding: 0; }
+
+.session {
+  position: relative;
+  display: grid; grid-template-columns: 4.4rem 1fr; gap: 0.6rem;
+  padding: 0 0 1.1rem 0;
+}
+/* trilho vertical dourado */
+.session::before {
+  content: ''; position: absolute; left: 4.65rem; top: 1.5rem; bottom: -0.1rem;
+  width: 1px; background: rgba(154, 123, 46, 0.30);
+}
+.session:last-child::before { display: none; }
+/* marcador losango no trilho */
+.session::after {
+  content: ''; position: absolute; left: calc(4.65rem - 3px); top: 0.62rem;
+  width: 7px; height: 7px; transform: rotate(45deg);
+  background: var(--ivory); border: 1px solid var(--gold-aged-2);
+}
+.session.is-live::after { background: var(--gold-aged-2); box-shadow: 0 0 0 4px rgba(154, 123, 46, 0.18); }
+.session.is-past::after { border-color: rgba(154, 123, 46, 0.35); }
+
+.session-time {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem;
+  padding-top: 0.35rem;
+}
+/* horários em serifa tabular (Cinzel só em texto, nunca em números).
+   Início e fim sempre empilhados, com o traço centrado entre eles:
+   nada de quebra feia nem sobreposição com o trilho/cartão. */
+.session-time .time {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+  letter-spacing: 0.01em; color: var(--navy-900);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  display: flex; flex-direction: column; align-items: center;
+  white-space: nowrap;
+}
+.time-sep { color: var(--ink-faint); font-size: 0.66rem; line-height: 0.85; }
+.session.is-past .session-time .time { color: var(--ink-faint); }
+
+/* cartão da sessão — filete lateral forte na cor do rito + tint bem
+   sutil do fundo na mesma cor (a cor "aparece" ao bater o olho) */
+.session-card {
+  position: relative;
+  margin-left: 0.9rem;
+  background: var(--paper);
+  background: color-mix(in srgb, var(--body-color, var(--gold-aged-2)) 4%, var(--paper));
+  border: 0;
+  border-left: 6px solid var(--body-color, var(--gold-aged-2));
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  padding: 0.8rem 0.9rem 0.85rem;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.session.is-live .session-card {
+  background: #fffdf3;
+  box-shadow: 0 6px 16px rgba(154, 123, 46, 0.18), 0 1px 3px rgba(20, 31, 60, 0.08);
+}
+.session.is-past .session-card { opacity: 0.68; }
+@media (hover: hover) {
+  .session-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-1px); }
+}
+
+.session-head { display: flex; align-items: flex-start; gap: 0.5rem; }
+.session-headings { flex: 1; min-width: 0; }
+.session-title {
+  margin: 0;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: 1.08rem; line-height: 1.3; color: var(--ink);
+}
+
+/* chip da sigla do corpo PREENCHIDO na cor do rito (texto claro AA:
+   todas as cores de BODIES têm contraste >= 4.7:1 com #fdfcf8) */
+.body-chip {
+  display: inline-flex; align-items: center;
+  margin-bottom: 0.35rem; padding: 0.18rem 0.6rem;
+  border: 0; border-radius: 4px;
+  color: #fdfcf8;
+  background: var(--body-color, var(--ink-faint));
+  font-family: var(--font-display); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+/* símbolo monoline dos itens de logística/sociais */
+.kind-icon { flex: none; margin-top: 0.1rem; color: #64748b; }
+.kind-icon svg { width: 1.15rem; height: 1.15rem; }
+.session:not(.is-log) .kind-icon { color: var(--gold-aged-2); }
+
+/* LOGÍSTICA (deslocamentos, refeições, intervalos): recua APENAS por
+   cor/fundo/ícone — o título mantém o MESMO peso e corpo das cerimônias */
+.session.is-log .session-card {
+  background: var(--ivory-2);
+  box-shadow: none;
+  border-left-color: rgba(100, 116, 139, 0.55);
+  padding: 0.6rem 0.8rem 0.65rem;
+}
+.session.is-log .session-title { color: var(--ink-soft); }
+.session.is-log::after { border-color: #8b95a5; }
+.session.is-log .session-time .time { color: var(--ink-soft); }
+.session.is-log .loc-chip { background: rgba(253, 251, 247, 0.85); }
+.session.is-log.is-live .session-card { background: #f4efe2; }
+
+.fav-btn {
+  flex: none; width: 44px; height: 44px; margin: -0.55rem -0.55rem 0 0;
+  display: grid; place-items: center;
+  background: none; border: 0; cursor: pointer;
+  color: rgba(154, 123, 46, 0.55);
+  transition: color 0.2s, transform 0.15s;
+}
+.fav-btn svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 1.2; }
+.fav-btn:hover { color: var(--gold-aged); }
+.fav-btn.is-fav { color: var(--gold-aged); }
+.fav-btn.is-fav svg { fill: currentColor; }
+.fav-btn:active { transform: scale(0.86); }
+
+.session-meta {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+.loc-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  min-height: 34px; padding: 0.15rem 0.7rem;
+  border: 0; border-radius: 999px;
+  font-size: 0.88rem; color: var(--ink-soft);
+  background: var(--ivory-2); text-decoration: none; cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.loc-chip svg { width: 0.8rem; height: 0.8rem; fill: currentColor; flex: none; }
+.loc-chip:hover { color: var(--gold-aged); background: #efe6ce; }
+
+/* linha compacta de agenda: "Google Agenda · Baixar (.ics)" —
+   dois links pequenos, sem virar botões grandes */
+.cal-links { display: inline-flex; align-items: center; gap: 0.4rem; }
+.cal-link {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  min-height: 34px; padding: 0.1rem 0.2rem;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.85rem;
+  color: var(--gold-aged); text-decoration: none;
+  transition: color 0.2s;
+}
+.cal-link:hover { color: var(--navy-900); text-decoration: underline; text-underline-offset: 2px; }
+.cal-link svg { width: 0.78rem; height: 0.78rem; fill: currentColor; flex: none; }
+.cal-sep { color: var(--ink-faint); user-select: none; }
+.loc-chip.is-tbd {
+  background: transparent; border: 1px dashed rgba(154, 123, 46, 0.40);
+  cursor: default; color: var(--ink-faint);
+}
+
+/* tarja de restrição — âmbar legível no tema claro */
+.restriction {
+  display: flex; gap: 0.55rem; align-items: flex-start;
+  margin-top: 0.7rem; padding: 0.6rem 0.7rem;
+  background: var(--amber-bg);
+  border: 0;
+  border-left: 3px solid #b07d18;
+  border-radius: 5px;
+}
+.restriction svg { width: 0.85rem; height: 0.85rem; fill: var(--amber); flex: none; margin-top: 0.2rem; }
+.restriction p { margin: 0; font-size: 0.94rem; line-height: 1.5; color: #4d3d15; }
+.restriction strong { color: var(--amber); font-weight: 600; }
+.restriction .note-list strong { color: #4d3d15; }
+.restriction .mail-link, .session-note .mail-link { color: var(--gold-aged); word-break: break-all; }
+
+.session-note { margin-top: 0.55rem; }
+.session-note p { margin: 0; font-size: 0.94rem; line-height: 1.5; color: var(--ink-soft); }
+.session-note p + p, .session-note ul + p { margin-top: 0.3rem; }
+.session-note strong, .restriction-body strong { font-weight: 600; color: var(--ink); }
+.session-note strong { color: var(--navy-900); }
+/* lista compacta com losango dourado — preços, trajes, itens da pauta */
+.note-list {
+  list-style: none; margin: 0.3rem 0 0; padding: 0;
+  font-size: 0.94rem; line-height: 1.45; color: var(--ink-soft);
+}
+.note-list li {
+  position: relative; padding-left: 1.05rem; margin: 0.18rem 0;
+}
+.note-list li::before {
+  content: ''; position: absolute; left: 0.15rem; top: 0.62em;
+  width: 5px; height: 5px; background: var(--gold-aged-2);
+  transform: rotate(45deg); opacity: 0.85;
+}
+.restriction-body { min-width: 0; }
+.restriction-body > strong { display: inline; }
+.restriction-body p { display: inline; margin: 0; font-size: 0.94rem; line-height: 1.5; color: #4d3d15; }
+.restriction-body p + p { display: block; margin-top: 0.25rem; }
+.restriction-body .note-list { color: #4d3d15; }
+.restriction-body .note-list li::before { background: var(--amber); }
+
+/* estado vazio do "meu roteiro" */
+.empty-state {
+  text-align: center; padding: 2.5rem 1.5rem;
+  background: var(--ivory-2);
+  border: 1px dashed rgba(154, 123, 46, 0.45); border-radius: var(--radius);
+  color: var(--ink-soft);
+}
+.empty-star svg { width: 1.6rem; height: 1.6rem; margin: 0 auto 0.6rem; fill: none; stroke: var(--gold-aged-2); stroke-width: 1; }
+.empty-state p { margin: 0; }
+
+/* ============================================================
+   LOCAIS
+   ============================================================ */
+#locations { position: relative; }
+.section-header { text-align: center; margin: 2.6rem 0 1.4rem; }
+.section-header h2 {
+  margin: 0 0 0.2rem;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 1.35rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--navy-900);
+}
+.section-header p { margin: 0; color: var(--ink-soft); }
+/* divisória de seção: onda do calçadão em dourado */
+.section-header::after {
+  content: ''; display: block; width: 7.5rem; height: 14px; margin: 0.8rem auto 0;
+  background: none center / contain no-repeat;
+}
+
+.venues { display: grid; gap: 0.8rem; }
+@media (min-width: 640px) { .venues { grid-template-columns: 1fr 1fr; } }
+
+.venue {
+  display: flex; gap: 0.8rem;
+  background: var(--paper);
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+}
+.venue-mark {
+  flex: none; width: 2.4rem; height: 2.4rem;
+  display: grid; place-items: center;
+  border: 1px solid var(--gold-line); border-radius: 50%;
+}
+.venue-mark svg { width: 1rem; height: 1rem; fill: var(--gold-aged); }
+.venue-name { margin: 0 0 0.15rem; font-size: 1.08rem; font-weight: 600; color: var(--ink); }
+.venue-detail { margin: 0 0 0.15rem; font-size: 0.9rem; color: var(--ink-soft); }
+.venue-address { margin: 0 0 0.6rem; font-size: 0.92rem; color: var(--ink-soft); }
+.venue-map {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  min-height: 40px; padding: 0.2rem 0.8rem;
+  background: var(--ivory-2); border: 0; border-radius: 999px;
+  font-size: 0.88rem; color: var(--gold-aged); text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.venue-map svg { width: 0.8rem; height: 0.8rem; fill: currentColor; }
+.venue-map:hover { background: #efe6ce; }
+
+/* ---------- contato ---------- */
+.contact-block {
+  margin-top: 1.4rem;
+  border: 0; border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  padding: 1rem 1.1rem;
+  display: grid; gap: 0.7rem;
+}
+@media (min-width: 640px) { .contact-block { grid-template-columns: 1fr 1fr; } }
+.contact-item h3 {
+  margin: 0 0 0.15rem;
+  font-family: var(--font-display); font-size: 0.68rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-aged);
+}
+.contact-item a { font-size: 1.02rem; color: var(--ink); text-decoration-color: var(--gold-line); word-break: break-all; }
+.contact-item a:hover { color: var(--gold-aged); }
+
+/* ============================================================
+   RODAPÉ — bloco marinho, skyline dourada brilhante
+   ============================================================ */
+footer {
+  position: relative;
+  margin-top: 2rem;
+  border-top: 2px solid var(--gold);
+  background: linear-gradient(180deg, var(--navy-900), var(--navy-975));
+  color: var(--cream);
+  text-align: center;
+  padding: 0 1rem 2rem;
+}
+.skyline { max-width: 46rem; margin: 0 auto; opacity: 0.9; }
+.skyline img, .skyline svg { width: 100%; height: auto; display: block; }
+
+.footer-motto { margin-top: 0.4rem; }
+.footer-motto span {
+  display: block;
+}
+.footer-motto span:first-child {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold);
+}
+.footer-motto span:last-child {
+  margin-top: 0.2rem;
+  font-size: 0.92rem; font-style: italic; font-weight: 500; color: var(--cream-dim);
+}
+/* assinatura da marca — versalete dourado, discreta, abaixo do lema */
+.brand-signature { margin: 1.15rem 0 0; }
+.brand-signature a {
+  display: inline-flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: 0 0.5rem;
+  padding: 0.2rem 0.4rem; /* área de toque/foco confortável */
+  text-decoration: none;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 0.62rem; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(201, 162, 75, 0.85);
+  transition: color 0.2s;
+}
+.brand-signature .brand-name { letter-spacing: 0.3em; color: var(--gold); }
+.brand-signature .brand-dot { color: rgba(201, 162, 75, 0.55); }
+.brand-signature a:hover,
+.brand-signature a:hover .brand-name { color: var(--gold-bright); }
+
+.footer-emg {
+  margin: 1.3rem auto 0; max-width: 22rem;
+  border: 1px solid rgba(201, 162, 75, 0.5); border-radius: var(--radius);
+  background: rgba(243, 237, 222, 0.05);
+  padding: 0.7rem 1rem;
+}
+.footer-emg .contact-item h3 { margin-bottom: 0.1rem; color: var(--gold-bright); }
+.footer-emg a {
+  font-family: var(--font-body); font-weight: 600; font-size: 1.25rem;
+  letter-spacing: 0.02em; color: var(--cream); text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+.footer-emg a:hover { color: var(--gold-bright); }
+.footer-note { margin: 1.2rem 0 0; font-size: 0.82rem; color: #a8a493; }
+
+/* ============================================================
+   BOTÃO FLUTUANTE DE EMERGÊNCIA — permanece marinho
+   ============================================================ */
+/* pílula marinho: ícone + rótulo "Emergências" SEMPRE visível */
+.emergency-fab {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 60;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  min-height: 48px; padding: 0.6rem 1.2rem 0.6rem 1rem;
+  background: var(--navy-900);
+  border: 1.5px solid var(--gold); border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(16, 31, 60, 0.35), 0 0 0 4px rgba(154, 123, 46, 0.10);
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.emergency-fab svg { width: 1.15rem; height: 1.15rem; fill: var(--gold-bright); flex: none; }
+.emergency-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(16, 31, 60, 0.42), 0 0 0 6px rgba(154, 123, 46, 0.14); }
+.emergency-fab:active { transform: scale(0.96); }
+.emergency-fab .fab-label {
+  white-space: nowrap;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 0.66rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--gold-bright);
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed; left: 50%; bottom: 5.4rem; z-index: 70;
+  transform: translate(-50%, 1rem);
+  background: var(--navy-800); color: var(--cream);
+  border: 1px solid rgba(201, 162, 75, 0.5); border-radius: 999px;
+  padding: 0.55rem 1.2rem; font-size: 0.95rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 10px 24px rgba(16, 31, 60, 0.28);
+  max-width: min(90vw, 26rem); text-align: center;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============================================================
+   MODAL DE INSTALAÇÃO (iOS / Android) — marfim, filete dourado
+   Conteúdo preenchido pelo app.js conforme a plataforma.
+   ============================================================ */
+body.modal-open { overflow: hidden; }
+
+.install-modal {
+  position: fixed; inset: 0; z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.install-modal[hidden] { display: none; }
+
+.install-overlay {
+  position: absolute; inset: 0;
+  background: rgba(6, 13, 28, 0.55);
+}
+
+.install-dialog {
+  position: relative;
+  width: min(100%, 26rem);
+  max-height: min(86vh, 42rem); overflow-y: auto;
+  background: var(--ivory);
+  border: 1px solid var(--gold-line);
+  border-top: 3px solid var(--gold);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(6, 13, 28, 0.35);
+  padding: 1.25rem 1.2rem 1.35rem;
+}
+
+.install-close {
+  position: absolute; top: 0.55rem; right: 0.55rem;
+  width: 44px; height: 44px; min-width: 44px;
+  background: none; border: 1px solid var(--gold-line); border-radius: 50%;
+  color: var(--gold-aged); font-size: 1.45rem; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.install-close:hover { background: var(--gold-faint); }
+
+.install-title {
+  margin: 0.2rem 2.8rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.18rem; font-weight: 700; letter-spacing: 0.04em;
+  color: var(--navy-900);
+}
+.install-rule {
+  height: 1px; border: 0; margin: 0.65rem 0 0.9rem;
+  background: linear-gradient(90deg, var(--gold-line), transparent);
+}
+.install-intro { margin: 0 0 1rem; font-size: 0.98rem; line-height: 1.5; color: var(--ink-soft); }
+.install-intro strong, .install-steps strong, .install-note strong { color: var(--navy-900); }
+
+.install-steps {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 0.85rem;
+  counter-reset: step;
+}
+.install-steps li {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  counter-increment: step;
+}
+.install-step-icon {
+  position: relative; flex: none;
+  width: 46px; height: 46px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--paper); color: var(--gold-aged);
+  border: 1px solid var(--gold-line); border-radius: 12px;
+  box-shadow: var(--shadow-card);
+}
+.install-step-icon svg { width: 23px; height: 23px; }
+.install-step-icon::after {
+  content: counter(step);
+  position: absolute; top: -7px; left: -7px;
+  width: 19px; height: 19px; border-radius: 50%;
+  background: var(--navy-900); color: var(--gold-bright);
+  font-size: 0.68rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.install-steps p { margin: 0.2rem 0 0; font-size: 0.97rem; line-height: 1.45; color: var(--ink); }
+
+.install-note {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  margin: 1.05rem 0 0; padding: 0.7rem 0.85rem;
+  background: var(--gold-faint);
+  border: 1px solid var(--gold-line); border-radius: 10px;
+  font-size: 0.93rem; line-height: 1.45; color: var(--ink-soft);
+}
+.install-note svg { flex: none; width: 1rem; height: 1rem; fill: var(--gold-aged); margin-top: 0.15rem; }
+
+/* ============================================================
+   FOCO VISÍVEL (acessibilidade)
+   ============================================================ */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--navy-800);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   DESKTOP — respiro maior
+   ============================================================ */
+@media (min-width: 720px) {
+  .masthead { padding: 0.6rem 1rem 0.5rem; }
+  .masthead-row { gap: 0.9rem; }
+  .session { grid-template-columns: 5.6rem 1fr; }
+  .session::before { left: 5.85rem; }
+  .session::after { left: calc(5.85rem - 3px); }
+  /* desktop mantém a pilha início/fim — nunca lado a lado (encavalava) */
+  .session-time .time { font-size: 0.98rem; }
+  .session-card { margin-left: 1.2rem; }
+}

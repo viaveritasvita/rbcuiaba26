@@ -1,0 +1,315 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+PRODID:-//Rito Brasileiro Cuiaba 2026//Jornada dos Graus Filosoficos//PT
+X-WR-CALNAME:Jornada dos Graus Filosóficos — Rito Brasileiro · Cuiabá 2026
+X-WR-TIMEZONE:America/Cuiaba
+BEGIN:VEVENT
+UID:m-01@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T110000Z
+DTEND:20261107T114000Z
+SUMMARY:Café da manhã e recepção
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:Ágape: garanta o seu na página Ágape deste site.\nhttps://via
+ veritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-02@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T114000Z
+DTEND:20261107T120000Z
+SUMMARY:Orientações e preparação
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-03@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T120000Z
+DTEND:20261107T121500Z
+SUMMARY:Abertura dos trabalhos
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-04@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T121500Z
+DTEND:20261107T132500Z
+SUMMARY:Grau 4 · Mestre da Discrição
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-05@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T132500Z
+DTEND:20261107T134500Z
+SUMMARY:Grau 9 · Mestre da Justiça
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-06@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T134500Z
+DTEND:20261107T140500Z
+SUMMARY:Grau 14 · Mestre da Perseverança
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-07@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T140500Z
+DTEND:20261107T142500Z
+SUMMARY:Grau 15 · Cavaleiro da Liberdade
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-08@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T142500Z
+DTEND:20261107T144500Z
+SUMMARY:Intervalo e preparação
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-09@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T144500Z
+DTEND:20261107T161500Z
+SUMMARY:Grau 18 · Cavaleiro Rosa-Cruz
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-10@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T161500Z
+DTEND:20261107T163000Z
+SUMMARY:Encerramento dos trabalhos
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:m-11@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T163000Z
+DTEND:20261107T173000Z
+SUMMARY:Almoço
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:Cardápio de culinária cuiabana.\nÁgape: garanta o seu na pági
+ na Ágape deste site.\nhttps://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-01@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T173000Z
+DTEND:20261107T174000Z
+SUMMARY:Abertura dos trabalhos
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-02@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T174000Z
+DTEND:20261107T183500Z
+SUMMARY:Grau 19 · Missionário da Agricultura e da Pecuária
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-03@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T183500Z
+DTEND:20261107T185000Z
+SUMMARY:Grau 22 · Missionário da Economia
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-04@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T185000Z
+DTEND:20261107T190500Z
+SUMMARY:Grau 26 · Missionário da Paz
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-05@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T190500Z
+DTEND:20261107T192000Z
+SUMMARY:Grau 29 · Missionário da Religião
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-06@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T192000Z
+DTEND:20261107T193500Z
+SUMMARY:Intervalo e preparação
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-07@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T193500Z
+DTEND:20261107T204500Z
+SUMMARY:Grau 30 · Missionário da Filosofia
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:t-08@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T204500Z
+DTEND:20261107T210000Z
+SUMMARY:Encerramento dos trabalhos
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:n-01@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T210000Z
+DTEND:20261107T211500Z
+SUMMARY:Abertura dos trabalhos
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:n-02@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T211500Z
+DTEND:20261107T214000Z
+SUMMARY:Grau 31 · Guardião do Bem Público
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:n-03@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T214000Z
+DTEND:20261107T220500Z
+SUMMARY:Grau 32 · Guardião do Civismo
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:n-04@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T220500Z
+DTEND:20261107T223000Z
+SUMMARY:Preparação para a Investidura
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:g-01@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261107T223000Z
+DTEND:20261108T000000Z
+SUMMARY:Grau 33 · Servidor da Ordem\, da Pátria e da Humanidade
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:Início da Investidura às 18h30 · encerramento às 20h00.\nhttp
+ s://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:f-01@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261108T000000Z
+DTEND:20261108T003500Z
+SUMMARY:Solenidade Histórica de Fundação
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:Instalação dos três Corpos Filosóficos que integrarão a estru
+ tura da 4ª Delegacia Litúrgica de Mato Grosso\, responsáveis pelo desenv
+ olvimento e pela administração dos Graus 4º ao 32º:\n• Ilustre e Sublime
+  Capítulo Virtude e Perfeição nº 155 · Graus 4º ao 18º\n• Poderoso Grand
+ e Conselho Generoso Ponce nº 198 · Graus 19º ao 30º\n• Colendo Alto Colé
+ gio Lenine Póvoas nº 261 · Graus 31º e 32º\nhttps://viaveritasvita.githu
+ b.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:f-02@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261108T003500Z
+DTEND:20261108T020000Z
+SUMMARY:Jantar comemorativo
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:Ágape: garanta o seu na página Ágape deste site.\nhttps://via
+ veritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+BEGIN:VEVENT
+UID:f-03@rbcuiaba26
+DTSTAMP:20261023T213100Z
+DTSTART:20261108T020000Z
+DTEND:20261108T030000Z
+SUMMARY:Encerramento previsto
+LOCATION:Complexo Maçônico da Loja Filhos de Nazaré\, Rua São João Del Re
+ y\, nº 36 – Jardim Mariana\, Cuiabá – MT\, 78040-640
+DESCRIPTION:https://viaveritasvita.github.io/rbcuiaba26/
+URL:https://viaveritasvita.github.io/rbcuiaba26/
+END:VEVENT
+END:VCALENDAR
