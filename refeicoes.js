@@ -282,6 +282,15 @@
     return true;
   }
 
+  const pagadorOutro = () => $('input[name="pagador"]:checked').value === 'outro';
+  function marcarPagador(outro) {
+    $$('input[name="pagador"]').forEach((el) => {
+      el.checked = (el.value === 'outro') === outro;
+      el.closest('label').classList.toggle('is-on', el.checked);
+    });
+    $('#fPagadorBox').hidden = !outro;
+  }
+
   function montarPedido(codigo) {
     const c = contagem();
     return {
@@ -291,6 +300,10 @@
       whatsapp: $('#fWhats').value.trim(),
       loja: $('#fLoja').value.trim(),
       sessoes: C.sessoes.filter((s) => state.sessoes.has(s.id)).map((s) => s.nome),
+      // quem faz o Pix (opcional): ajuda a achar o pagamento no extrato
+      pagadorOutro: pagadorOutro(),
+      pagador: pagadorOutro() ? $('#fPagador').value.trim() : $('#fNome').value.trim(),
+      bancoPagador: $('#fBanco').value.trim(),
       irmao: IDS.filter((id) => state.irmao.has(id)),
       acomp: { ...state.acomp },
       cafe: c.cafe || 0,
@@ -380,6 +393,7 @@
     if (limpar) {
       state = novoEstado();
       $('#rfForm').reset();
+      marcarPagador(false);
       $$('#fSessoes input').forEach((el) => { el.checked = false; });
     }
     $('#rfPagamento').hidden = true;
@@ -401,6 +415,9 @@
     state.irmao = new Set(p.irmao || []);
     state.acomp = Object.fromEntries(IDS.map((id) => [id, (p.acomp && p.acomp[id]) || 0]));
     state.auto = false;
+    marcarPagador(!!p.pagadorOutro);
+    $('#fPagador').value = p.pagadorOutro ? (p.pagador || '') : '';
+    $('#fBanco').value = p.bancoPagador || '';
   }
 
   /* ---------- pedido salvo neste aparelho ---------- */
@@ -479,6 +496,10 @@
     }
 
     $('#fNome').addEventListener('input', renderResumo);
+    $$('input[name="pagador"]').forEach((el) => el.addEventListener('change', () => {
+      marcarPagador(el.value === 'outro');
+      if (el.value === 'outro') $('#fPagador').focus();
+    }));
     $$('#fAtalhos [data-atalho]').forEach((el) => el.addEventListener('click', () => {
       state.irmao = new Set(el.dataset.atalho.split(','));
       state.auto = false;

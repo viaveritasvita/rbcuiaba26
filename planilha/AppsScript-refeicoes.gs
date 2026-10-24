@@ -30,6 +30,8 @@ const CABECALHO = [
   'Irmão', 'WhatsApp', 'Loja simbólica', 'Sessões', 'Refeições do irmão',
   'Acomp. café', 'Acomp. almoço', 'Acomp. jantar', 'Cafés', 'Almoços', 'Jantares',
   'Valor (R$)', 'Observação do tesoureiro',
+  // acrescentadas depois do lançamento (sempre no fim, para não deslocar as colunas)
+  'Titular da conta do Pix', 'Banco do Pix',
 ];
 const COL = Object.fromEntries(CABECALHO.map((h, i) => [h, i + 1]));
 const STATUS = ['Pix gerado', 'Pagamento informado', 'Confirmado', 'Não localizado', 'Cancelado'];
@@ -96,6 +98,7 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ABA);
+    garantirCabecalho_(sh);
     const agora = new Date();
 
     /* Conferência do tesoureiro: marca vários pedidos como Confirmado
@@ -134,6 +137,8 @@ function doPost(e) {
         'Almoços': Number(d.almoco) || 0,
         'Jantares': Number(d.jantar) || 0,
         'Valor (R$)': Number(d.valor) || 0,
+        'Titular da conta do Pix': texto_(d.pagadorOutro ? d.pagador : (d.pagador ? d.pagador + ' (o próprio)' : ''), 120),
+        'Banco do Pix': texto_(d.bancoPagador, 60),
       };
       if (linha) {
         // pedido alterado: atualiza os dados, sem rebaixar um status já avançado
@@ -195,6 +200,13 @@ function onEdit(e) {
 }
 
 /* ---------------- utilidades ---------------- */
+/* Colunas novas entram no fim do cabeçalho sem mexer nas linhas já gravadas */
+function garantirCabecalho_(sh) {
+  const atual = sh.getRange(1, 1, 1, CABECALHO.length).getValues()[0];
+  if (atual.join('|') === CABECALHO.join('|')) return;
+  sh.getRange(1, 1, 1, CABECALHO.length).setValues([CABECALHO])
+    .setFontWeight('bold').setBackground('#581828').setFontColor('#e6cd94');
+}
 /* número da coluna → letra (1 → A, 27 → AA) */
 function letra_(n) {
   let s = '';

@@ -284,3 +284,12 @@ body[data-modo="feito"] .rf-lead, body[data-modo="feito"] .rf-prices { display: 
   border-radius: 8px;
 }
 .rf-qr-demo small { display: block; margin-top: 0.5rem; font-family: var(--font-body); font-weight: 400; letter-spacing: 0; color: var(--ink-soft); }
+
+/* ---------- de qual conta sai o Pix (opcional) ---------- */
+.rf-payer { margin-top: 0.7rem; }
+.rf-payer-title { margin: 0; font-family: var(--font-display); font-size: 0.92rem; letter-spacing: 0.05em; color: var(--navy-900); }
+.rf-payer-title em { font-style: normal; font-family: var(--font-body); letter-spacing: 0; color: var(--ink-faint); }
+.rf-payer .rf-muted { margin: 0.2rem 0 0.7rem; }
+.rf-payer-opts { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.8rem; }
+.rf-radio { border-radius: 50%; }
+.rf-payer .rf-field[hidden] { display: none; }

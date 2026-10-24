@@ -132,6 +132,30 @@
       <section class="rf-step">
         <header class="rf-step-head"><span class="rf-step-num">4</span><h2>Resumo</h2></header>
         <div class="rf-card rf-summary" id="rfResumo"></div>
+
+        <!-- quem faz o Pix: opcional, ajuda o tesoureiro a achar o pagamento no extrato -->
+        <div class="rf-card rf-payer">
+          <p class="rf-payer-title">De qual conta vai sair o Pix? <em>(opcional)</em></p>
+          <p class="rf-muted rf-small">O extrato do tesoureiro mostra o nome do titular da conta. Isso ajuda a achar o seu pagamento.</p>
+          <div class="rf-payer-opts" role="radiogroup" aria-label="Titular da conta">
+            <label class="rf-me is-on"><input type="radio" name="pagador" value="eu" checked><span class="rf-check rf-radio" aria-hidden="true"></span><span>Conta no meu nome</span></label>
+            <label class="rf-me"><input type="radio" name="pagador" value="outro"><span class="rf-check rf-radio" aria-hidden="true"></span><span>Conta de outra pessoa</span></label>
+          </div>
+          <label class="rf-field" id="fPagadorBox" hidden>
+            <span>Nome do titular da conta</span>
+            <input type="text" id="fPagador" autocomplete="off" placeholder="Ex.: Maria da Silva (esposa) ou nome da empresa">
+          </label>
+          <label class="rf-field">
+            <span>Banco <em>(opcional)</em></span>
+            <input type="text" id="fBanco" list="bancos" autocomplete="off" placeholder="Ex.: Sicoob, Nubank, Banco do Brasil">
+          </label>
+          <datalist id="bancos">
+            <option value="Banco do Brasil"><option value="Bradesco"><option value="Itaú"><option value="Santander">
+            <option value="Caixa"><option value="Nubank"><option value="Inter"><option value="C6 Bank">
+            <option value="Sicoob"><option value="Sicredi"><option value="BTG Pactual"><option value="PicPay">
+            <option value="Mercado Pago"><option value="PagBank"><option value="99Pay"><option value="Banrisul">
+          </datalist>
+        </div>
         <p class="rf-error" id="rfErro" role="alert" hidden></p>
         <button type="submit" class="rf-btn rf-btn-primary rf-btn-block" id="btnGerar">Gerar Pix</button>
       </section>
