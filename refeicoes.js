@@ -311,24 +311,127 @@
       jantar: c.jantar || 0,
       valorIrmao: valorIrmao(),
       valorAcomp: valorAcomp(),
+      valorBase: total(),
       valor: total(),
     };
+  }
+
+  /* Registra e ESPERA a resposta: a planilha devolve os centavos de
+     identificação (únicos entre os pedidos do mesmo valor). */
+  async function registrarComCentavos(dados) {
+    if (!API_OK) return null;
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 15000);
+    try {
+      const res = await fetch(C.apiUrl, { method: 'POST', body: JSON.stringify(dados), signal: ctl.signal });
+      const json = await res.json();
+      return json && json.ok && typeof json.centavos === 'number' ? json : null;
+    } catch (e) {
+      return null;
+    } finally {
+      clearTimeout(t);
+    }
+  }
+
+  function ocupado(sim) {
+    ['#btnGerar', '#barGerar'].forEach((s) => {
+      const b = $(s);
+      b.disabled = sim;
+      b.textContent = sim ? 'Gerando seu Pix…' : 'Gerar Pix';
+    });
   }
 
   async function gerarPix(ev) {
     if (ev) ev.preventDefault();
     if (!validar()) return;
+    if ($('#btnGerar').disabled) return;
 
     // Alterar o pedido mantém o mesmo código (a planilha atualiza a linha)
     const codigo = (state.pedido && state.pedido.codigo) || novoCodigo();
     const dados = montarPedido(codigo);
+    let centavos = 0;
+    if (API_OK) {
+      ocupado(true);
+      const r = await registrarComCentavos(dados);
+      ocupado(false);
+      if (r) {
+        centavos = r.centavos;
+      } else {
+        // sem resposta: segue sem centavos e avisa a planilha disso
+        enviar({ ...dados, centavosFixos: 0 });
+      }
+    }
+    dados.centavos = centavos;
+    dados.valor = Math.round((dados.valorBase + centavos / 100) * 100) / 100;
     // Sem chave Pix (versão de avaliação): percorre o fluxo, mas sem QR
     const payload = PIX_OK ? pixPayload(dados.valor, codigo) : '';
     state.pedido = { ...dados, payload, status: 'Pix gerado', criadoEm: new Date().toISOString() };
     lsSet(LS.pedido, state.pedido);
 
     mostrarPagamento();
-    enviar(dados); // registra já na geração do QR (sem esperar)
+  }
+
+  /* ---------- comprovante (foto ou PDF) ----------
+     Fotos são reduzidas (lado maior 1600 px, JPEG) antes de subir. */
+  function lerComoBase64(blob) {
+    return new Promise((ok, erro) => {
+      const fr = new FileReader();
+      fr.onload = () => ok(String(fr.result).split(',')[1]);
+      fr.onerror = erro;
+      fr.readAsDataURL(blob);
+    });
+  }
+  async function reduzirFoto(file) {
+    try {
+      const bmp = await createImageBitmap(file);
+      const k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(bmp.width * k);
+      cv.height = Math.round(bmp.height * k);
+      cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
+      const blob = await new Promise((ok) => cv.toBlob(ok, 'image/jpeg', 0.82));
+      return blob ? { blob, mime: 'image/jpeg' } : { blob: file, mime: file.type };
+    } catch (e) {
+      return { blob: file, mime: file.type }; // formato que o navegador não abre (ex.: HEIC): vai como está
+    }
+  }
+  async function enviarComprovante(input) {
+    const file = input.files && input.files[0];
+    const box = input.closest('.rf-upload');
+    const msg = $('.rf-upload-msg', box);
+    if (!file) return;
+    const p = state.pedido;
+    const ehPdf = file.type === 'application/pdf';
+    if (!ehPdf && !/^image\//.test(file.type)) { msg.textContent = 'Envie uma foto ou um PDF.'; return; }
+    if (file.size > 6 * 1024 * 1024 && ehPdf) { msg.textContent = 'PDF grande demais (máximo 6 MB).'; return; }
+    box.classList.add('is-busy');
+    msg.textContent = 'Enviando o comprovante…';
+    try {
+      const { blob, mime } = ehPdf ? { blob: file, mime: 'application/pdf' } : await reduzirFoto(file);
+      const dados = await lerComoBase64(blob);
+      const res = await fetch(C.apiUrl, { method: 'POST', body: JSON.stringify({ acao: 'comprovante', codigo: p.codigo, mime, dados }) });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.erro || 'erro');
+      p.comprovante = true;
+      if (p.status === 'Pix gerado') { p.status = 'Pagamento informado'; p.pagoEm = new Date().toISOString(); }
+      lsSet(LS.pedido, p);
+      atualizarUpload();
+      if (!$('#rfPagamento').hidden) setTimeout(mostrarFeito, 900);
+    } catch (e) {
+      msg.textContent = 'Não foi possível enviar agora. Tente de novo ou mande pelo WhatsApp.';
+    } finally {
+      box.classList.remove('is-busy');
+      input.value = '';
+    }
+  }
+  function atualizarUpload() {
+    const enviado = state.pedido && state.pedido.comprovante;
+    $$('.rf-upload').forEach((b) => {
+      b.hidden = !API_OK;
+      b.classList.toggle('is-ok', !!enviado);
+      $('.rf-btn', b).textContent = enviado ? 'Comprovante enviado' : 'Enviar o comprovante';
+      $('.rf-upload-msg', b).textContent = enviado ? 'Recebido. Obrigado! (pode enviar outro, se precisar)' : 'Foto (print) ou PDF do comprovante do Pix.';
+    });
   }
 
   function desenharQr(texto) {
@@ -336,6 +439,27 @@
     qr.addData(texto);
     qr.make();
     $('#payQr').innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+  }
+
+  /* ---------- WhatsApp do tesoureiro ----------
+     A mensagem já vai escrita com o código e o valor do pedido:
+     o irmão só anexa o comprovante e envia. */
+  const WHATS_OK = !!(C.tesoureiro && /^\d{12,13}$/.test(C.tesoureiro.whatsapp || ''));
+  function textoWhats(tipo) {
+    const t = C.tesoureiro.nome;
+    const p = state.pedido;
+    if (tipo === 'comprovante' && p) {
+      return `Olá, ${t}! Sou ${p.nome}, da ${p.loja}. Fiz o pedido ${p.codigo} do Ágape da Jornada, no valor de ${brl(p.valor)}. Segue o comprovante do Pix:`;
+    }
+    return `Olá, ${t}! Tenho uma dúvida sobre o Ágape da Jornada (Rito Brasileiro, 7/11):`;
+  }
+  function atualizarWhats() {
+    $$('[data-whats]').forEach((a) => {
+      a.hidden = !WHATS_OK;
+      if (WHATS_OK) a.href = `https://wa.me/${C.tesoureiro.whatsapp}?text=${encodeURIComponent(textoWhats(a.dataset.whats))}`;
+    });
+    const box = $('[data-whats-box]');
+    if (box) box.hidden = !WHATS_OK;
   }
 
   const resumoCurto = (p) => IDS.filter((id) => p[id]).map((id) => qtd(id, p[id])).join(' · ');
@@ -358,12 +482,17 @@
     $('#payBanco').textContent = C.pix.banco;
     $('#payBanco').hidden = $('#payBancoLbl').hidden = !C.pix.banco;
     $('#payValor').textContent = brl(p.valor);
+    const cent = p.centavos || 0;
+    $('#payCentavos').hidden = !cent;
+    if (cent) $('#payCentavos').innerHTML = `Os <strong>${cent} ${cent > 1 ? 'centavos' : 'centavo'}</strong> a mais identificam o seu Pix no extrato do tesoureiro. Pague o <strong>valor exato</strong>.`;
+    atualizarUpload();
     $('#btnCopiaCola').hidden = $('#btnCopiaChave').hidden = !p.payload;
     if (p.payload) desenharQr(p.payload);
     else {
       $('#payChave').textContent = 'a definir';
       $('#payQr').innerHTML = '<p class="rf-qr-demo">Versão de avaliação<br><small>O QR Code do Pix do Grande Tesoureiro aparece aqui, já com o valor.</small></p>';
     }
+    atualizarWhats();
     window.scrollTo({ top: 0 });
   }
 
@@ -386,6 +515,8 @@
     $('#doneNome').textContent = p.nome.split(' ')[0];
     $('#doneCodigo').textContent = p.codigo;
     $('#doneTotal').textContent = brl(p.valor);
+    atualizarWhats();
+    atualizarUpload();
     window.scrollTo({ top: 0 });
   }
 
@@ -515,6 +646,8 @@
 
     if (!API_OK) $('#rfFootNote').textContent = 'Modo de teste · planilha ainda não conectada';
     $('#rfDemo').hidden = PIX_OK;
+    atualizarWhats();
+    $$('.rf-upload input[type="file"]').forEach((el) => el.addEventListener('change', () => enviarComprovante(el)));
 
     renderMeals();
     renderSalvo();

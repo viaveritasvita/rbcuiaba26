@@ -47,6 +47,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;background:#eee;color:#555}
 .badge.ok{background:var(--verde-bg);color:var(--verde)} .badge.inf{background:var(--ambar-bg);color:var(--ambar)}
 .badge.gerado{background:#efe9de;color:#7a6a5a} .badge.err{background:var(--verm-bg);color:var(--verm)}
+.sig{display:inline-block;margin-top:4px;color:var(--ouro-velho);font-size:13px}
 .wa{color:var(--verde);text-decoration:none;white-space:nowrap}
 .vazio{padding:30px;text-align:center;color:var(--suave);font-style:italic}
 .erro{color:var(--verm);margin-top:8px}
@@ -159,7 +160,8 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
         var w = String(p['WhatsApp'] || '').replace(/\D/g, '');
         if (w.length === 10 || w.length === 11) w = '55' + w;
         return '<tr><td class="cod">' + esc(p['Código']) + '</td>'
-          + '<td><span class="badge ' + (CLS[p['Status']] || '') + '">' + esc(p['Status']) + '</span></td>'
+          + '<td><span class="badge ' + (CLS[p['Status']] || '') + '">' + esc(p['Status']) + '</span>'
+          + (/^https:\/\//.test(p['Comprovante'] || '') ? '<div><a class="sig" href="' + esc(p['Comprovante']) + '" target="_blank" rel="noopener">ver comprovante</a></div>' : '') + '</td>'
           + '<td>' + esc(p['Irmão']) + (p['Loja simbólica'] ? '<div class="pess">' + esc(p['Loja simbólica']) + '</div>' : '')
           + (p['Titular da conta do Pix'] || p['Banco do Pix'] ? '<div class="pess">Pix: ' + esc([p['Titular da conta do Pix'], p['Banco do Pix']].filter(Boolean).join(' · ')) + '</div>' : '') + '</td>'
           + '<td class="pess">' + esc(p['Refeições do irmão']) + '</td>'
@@ -171,7 +173,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   }
 
   function csv() {
-    var cols = ['Código','Status','Criado em','Pagamento informado em','Confirmado em','Irmão','WhatsApp','Loja simbólica','Refeições do irmão','Acomp. café','Acomp. almoço','Acomp. jantar','Cafés','Almoços','Jantares','Valor (R$)','Titular da conta do Pix','Banco do Pix','Observação do tesoureiro'];
+    var cols = ['Código','Status','Criado em','Pagamento informado em','Confirmado em','Irmão','WhatsApp','Loja simbólica','Refeições do irmão','Acomp. café','Acomp. almoço','Acomp. jantar','Cafés','Almoços','Jantares','Valor (R$)','Centavos de identificação','Titular da conta do Pix','Banco do Pix','Comprovante','Observação do tesoureiro'];
     var q = function (v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; };
     var linhas = [cols.map(q).join(';')].concat(filtrados().map(function (p) { return cols.map(function (c) { return q(p[c]); }).join(';'); }));
     var blob = new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' });

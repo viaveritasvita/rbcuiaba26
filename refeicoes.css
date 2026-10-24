@@ -293,3 +293,25 @@ body[data-modo="feito"] .rf-lead, body[data-modo="feito"] .rf-prices { display: 
 .rf-payer-opts { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.8rem; }
 .rf-radio { border-radius: 50%; }
 .rf-payer .rf-field[hidden] { display: none; }
+
+/* ---------- WhatsApp do tesoureiro ---------- */
+.rf-btn-whats { background: #1f8f4e; color: #fff; border-color: #17733e; }
+.rf-btn-whats:hover { background: #17733e; }
+.rf-btn-whats[hidden], .rf-help[hidden] { display: none; }
+.rf-help { text-align: center; margin: 1.6rem 0 0; color: var(--ink-soft); }
+.rf-help a { color: #17733e; font-weight: 600; }
+
+/* ---------- centavos de identificação e comprovante ---------- */
+.rf-pay-cents { margin: 0.4rem auto 0; max-width: 22rem; font-size: 0.9rem; color: var(--amber); background: var(--amber-bg); border-radius: 8px; padding: 0.45rem 0.7rem; }
+.rf-pay-cents[hidden] { display: none; }
+.rf-cents-note { margin: 0.7rem 0 0; }
+.rf-btn:disabled { opacity: 0.7; cursor: progress; }
+.rf-upload { display: block; position: relative; text-align: center; cursor: pointer; }
+.rf-upload[hidden] { display: none; }
+.rf-upload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.rf-upload .rf-btn { pointer-events: none; }
+.rf-upload-msg { display: block; margin-top: 0.35rem; }
+.rf-upload.is-busy .rf-btn { opacity: 0.6; }
+.rf-upload.is-ok .rf-btn { background: #e7f1ea; color: #1a5c2a; }
+.rf-upload.is-ok .rf-btn::before { content: '✓ '; }
+.rf-upload.is-ok .rf-upload-msg { color: #1a5c2a; }

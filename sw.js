@@ -20,7 +20,7 @@ try {
   /* sem rede na instalação: apenas offline, sem push */
 }
 
-const CACHE = 'rbcuiaba26-v2';
+const CACHE = 'rbcuiaba26-v3';
 
 const APP_SHELL = [
   './',

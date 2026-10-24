@@ -25,6 +25,14 @@ const REFEICOES_CONFIG = {
     titular: 'Ir. Marcelo Correia · Grande Tesoureiro da 4ª Delegacia Litúrgica',
   },
 
+  /* WhatsApp do Grande Tesoureiro (botões "falar com o tesoureiro").
+     Número como o WhatsApp registra: 55 + DDD + número, só dígitos.
+     Vazio = os botões somem. */
+  tesoureiro: {
+    nome: 'Ir. Marcelo',
+    whatsapp: '556599811994',
+  },
+
   /* Preço por pessoa conforme o NÚMERO de refeições escolhidas.
      Buffet: R$ 45 uma refeição · R$ 120 as três.
      Duas refeições = 2 × R$ 45 (confirmar com o buffet).

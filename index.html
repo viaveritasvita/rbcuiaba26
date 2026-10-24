@@ -156,6 +156,7 @@
             <option value="Mercado Pago"><option value="PagBank"><option value="99Pay"><option value="Banrisul">
           </datalist>
         </div>
+        <p class="rf-muted rf-small rf-cents-note">Ao gerar o Pix, somamos alguns centavos (no máximo R$ 0,99) só para o tesoureiro reconhecer o seu pagamento no extrato.</p>
         <p class="rf-error" id="rfErro" role="alert" hidden></p>
         <button type="submit" class="rf-btn rf-btn-primary rf-btn-block" id="btnGerar">Gerar Pix</button>
       </section>
@@ -167,6 +168,7 @@
         <p class="rf-pay-label">Pedido</p>
         <p class="rf-pay-code" id="payCodigo"></p>
         <p class="rf-pay-total" id="payTotal"></p>
+        <p class="rf-pay-cents" id="payCentavos" hidden></p>
         <p class="rf-pay-who" id="payQuem"></p>
 
         <div class="rf-qr" id="payQr" aria-label="QR Code Pix"></div>
@@ -186,7 +188,13 @@
         </div>
 
         <div class="rf-pay-actions">
+          <label class="rf-upload" hidden>
+            <input type="file" accept="image/*,application/pdf">
+            <span class="rf-btn rf-btn-gold rf-btn-block">Enviar o comprovante</span>
+            <span class="rf-upload-msg rf-muted rf-small"></span>
+          </label>
           <button type="button" class="rf-btn rf-btn-primary rf-btn-block" id="btnPaguei">Já fiz o Pix</button>
+          <a class="rf-btn rf-btn-whats rf-btn-block" data-whats="comprovante" href="#" target="_blank" rel="noopener" hidden>Mandar o comprovante no WhatsApp</a>
           <button type="button" class="rf-btn rf-btn-ghost rf-btn-block" id="btnAlterar">Alterar o pedido</button>
         </div>
         <p class="rf-muted rf-center rf-small">Guarde o comprovante. O tesoureiro confere os pagamentos no extrato bancário pelo código do pedido.</p>
@@ -201,11 +209,21 @@
         <p>Obrigado, <strong id="doneNome"></strong>. Seu pedido <strong id="doneCodigo"></strong> foi registrado e será confirmado pelo Grande Tesoureiro assim que o Pix aparecer no extrato.</p>
         <p class="rf-done-total" id="doneTotal"></p>
         <div class="rf-pay-actions">
+          <label class="rf-upload" hidden>
+            <input type="file" accept="image/*,application/pdf">
+            <span class="rf-btn rf-btn-gold rf-btn-block">Enviar o comprovante</span>
+            <span class="rf-upload-msg rf-muted rf-small"></span>
+          </label>
+          <a class="rf-btn rf-btn-whats rf-btn-block" data-whats="comprovante" href="#" target="_blank" rel="noopener" hidden>Mandar o comprovante no WhatsApp</a>
           <a class="rf-btn rf-btn-primary rf-btn-block" href="programacao.html">Ver a programação</a>
           <button type="button" class="rf-btn rf-btn-ghost rf-btn-block" id="btnNovo">Fazer pedido para outro irmão</button>
         </div>
       </div>
     </section>
+
+    <p class="rf-help" data-whats-box hidden>
+      Dúvida? <a data-whats="duvida" href="#" target="_blank" rel="noopener">Fale com o Grande Tesoureiro no WhatsApp</a>
+    </p>
 
     <a class="rf-back" href="programacao.html">← Voltar à programação da Jornada</a>
   </main>

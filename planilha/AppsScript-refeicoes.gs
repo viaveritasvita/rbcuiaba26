@@ -32,13 +32,16 @@ const CABECALHO = [
   'Valor (R$)', 'Observação do tesoureiro',
   // acrescentadas depois do lançamento (sempre no fim, para não deslocar as colunas)
   'Titular da conta do Pix', 'Banco do Pix',
+  'Centavos de identificação', 'Comprovante',
 ];
 const COL = Object.fromEntries(CABECALHO.map((h, i) => [h, i + 1]));
 const STATUS = ['Pix gerado', 'Pagamento informado', 'Confirmado', 'Não localizado', 'Cancelado'];
 const NOMES_REFEICAO = { cafe: 'café', almoco: 'almoço', jantar: 'jantar' };
 
-/* Rode UMA VEZ (menu Executar → configurar) para montar a aba. */
+/* Rode UMA VEZ (menu Executar → configurar) para montar a aba.
+   Rodar de novo é seguro: também cria a pasta dos comprovantes no Drive. */
 function configurar() {
+  pastaComprovantes_();
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   ss.setSpreadsheetTimeZone('America/Cuiaba');
   let sh = ss.getSheetByName(ABA);
@@ -51,6 +54,7 @@ function configurar() {
   const regra = SpreadsheetApp.newDataValidation().requireValueInList(STATUS, true).build();
   sh.getRange(2, COL['Status'], 1000, 1).setDataValidation(regra);
   sh.getRange(2, COL['Valor (R$)'], 1000, 1).setNumberFormat('"R$" #,##0.00');
+  sh.getRange(2, COL['Centavos de identificação'], 1000, 1).setNumberFormat('"R$" 0.00');
   sh.getRange(2, COL['WhatsApp'], 1000, 1).setNumberFormat('@');
 
   // cores por status
@@ -118,11 +122,26 @@ function doPost(e) {
       return json_({ ok: true, confirmados: feitos, naoEncontrados: ausentes });
     }
 
+    /* Remove linhas de teste (ou pedidos desistidos), protegida pela senha.
+       codigos: ['RB...']. Não apaga o comprovante do Drive. */
+    if (d.acao === 'remover') {
+      if (d.chave !== CHAVE_PAINEL || CHAVE_PAINEL === 'TROQUE-ESTA-SENHA') return json_({ ok: false, erro: 'senha incorreta' });
+      const removidos = [];
+      (d.codigos || []).forEach(function (cod) {
+        const l = acharLinha_(sh, String(cod || ''));
+        if (l) { sh.deleteRow(l); removidos.push(cod); }
+      });
+      return json_({ ok: true, removidos: removidos });
+    }
+
     if (!/^RB[A-Z0-9]{6}$/.test(d.codigo || '')) return json_({ ok: false, erro: 'código inválido' });
     const linha = acharLinha_(sh, d.codigo);
 
     if (d.acao === 'registrar') {
       const acomp = d.acomp || {};
+      const base = Math.round((Number(d.valorBase !== undefined ? d.valorBase : d.valor) || 0) * 100) / 100;
+      const cent = escolherCentavos_(sh, linha, base, d.centavosFixos);
+      const valorFinal = Math.round((base + cent / 100) * 100) / 100;
       const valores = {
         'Código': d.codigo,
         'Irmão': texto_(d.nome, 120),
@@ -136,7 +155,8 @@ function doPost(e) {
         'Cafés': Number(d.cafe) || 0,
         'Almoços': Number(d.almoco) || 0,
         'Jantares': Number(d.jantar) || 0,
-        'Valor (R$)': Number(d.valor) || 0,
+        'Valor (R$)': valorFinal,
+        'Centavos de identificação': cent / 100,
         'Titular da conta do Pix': texto_(d.pagadorOutro ? d.pagador : (d.pagador ? d.pagador + ' (o próprio)' : ''), 120),
         'Banco do Pix': texto_(d.bancoPagador, 60),
       };
@@ -147,6 +167,26 @@ function doPost(e) {
         valores['Status'] = 'Pix gerado';
         valores['Criado em'] = agora;
         sh.appendRow(CABECALHO.map(function (h) { return valores[h] !== undefined ? valores[h] : ''; }));
+      }
+      return json_({ ok: true, centavos: cent, valor: valorFinal });
+    }
+
+    /* Comprovante enviado pelo irmão (foto ou PDF, em base64):
+       vai para a pasta do Drive e o link fica na linha do pedido. */
+    if (d.acao === 'comprovante') {
+      if (!linha) return json_({ ok: false, erro: 'pedido não encontrado' });
+      const tipos = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/heic': 'heic', 'application/pdf': 'pdf' };
+      const ext = tipos[d.mime];
+      if (!ext) return json_({ ok: false, erro: 'tipo de arquivo não aceito' });
+      if (!d.dados || d.dados.length > 8 * 1024 * 1024) return json_({ ok: false, erro: 'arquivo grande demais' });
+      const nomeIrmao = String(sh.getRange(linha, COL['Irmão']).getValue()).slice(0, 60);
+      const blob = Utilities.newBlob(Utilities.base64Decode(d.dados), d.mime, d.codigo + ' - ' + nomeIrmao + '.' + ext);
+      const arq = pastaComprovantes_().createFile(blob);
+      sh.getRange(linha, COL['Comprovante']).setValue(arq.getUrl());
+      const st = sh.getRange(linha, COL['Status']).getValue();
+      if (st === 'Pix gerado') {
+        sh.getRange(linha, COL['Status']).setValue('Pagamento informado');
+        sh.getRange(linha, COL['Pagamento informado em']).setValue(agora);
       }
       return json_({ ok: true });
     }
@@ -197,6 +237,42 @@ function onEdit(e) {
   const sh = e.range.getSheet();
   if (sh.getName() !== ABA || e.range.getColumn() !== COL['Status'] || e.range.getRow() < 2) return;
   if (e.value === 'Confirmado') sh.getRange(e.range.getRow(), COL['Confirmado em']).setValue(new Date());
+}
+
+/* ---------------- centavos de identificação ----------------
+   Cada pedido recebe centavos (R$ 0,01 a 0,99) que nenhum outro pedido
+   ativo com o mesmo valor base usa. Assim, só pelo valor no extrato o
+   tesoureiro sabe de quem é o Pix. Pedido alterado mantém os centavos
+   se o valor base não mudou. */
+function escolherCentavos_(sh, linha, base, fixos) {
+  if (fixos !== undefined && fixos !== null && fixos !== '') return Math.max(0, Math.min(99, Number(fixos) || 0));
+  const ultima = sh.getLastRow();
+  const usados = {};
+  if (ultima >= 2) {
+    const vals = sh.getRange(2, 1, ultima - 1, CABECALHO.length).getValues();
+    vals.forEach(function (r, i) {
+      if (!r[0] || r[COL['Status'] - 1] === 'Cancelado') return;
+      const c = Math.round((Number(r[COL['Centavos de identificação'] - 1]) || 0) * 100);
+      const b = Math.round(((Number(r[COL['Valor (R$)'] - 1]) || 0) - c / 100) * 100) / 100;
+      if (b !== base) return;
+      if (linha && i + 2 === linha) { usados.proprio = c; return; }
+      usados[c] = true;
+    });
+  }
+  if (usados.proprio && !usados[usados.proprio]) return usados.proprio;
+  const livres = [];
+  for (let c = 1; c <= 99; c++) if (!usados[c]) livres.push(c);
+  return livres.length ? livres[Math.floor(Math.random() * livres.length)] : 0;
+}
+
+/* Pasta "Comprovantes — Ágape Jornada RB 2026" no Drive do dono da planilha */
+function pastaComprovantes_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('PASTA_COMPROVANTES');
+  if (id) { try { return DriveApp.getFolderById(id); } catch (e) { /* apagada: cria outra */ } }
+  const pasta = DriveApp.createFolder('Comprovantes — Ágape Jornada RB 2026');
+  props.setProperty('PASTA_COMPROVANTES', pasta.getId());
+  return pasta;
 }
 
 /* ---------------- utilidades ---------------- */
