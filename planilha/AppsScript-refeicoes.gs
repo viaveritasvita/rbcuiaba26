@@ -140,7 +140,8 @@ function doPost(e) {
     if (d.acao === 'registrar') {
       const acomp = d.acomp || {};
       const base = Math.round((Number(d.valorBase !== undefined ? d.valorBase : d.valor) || 0) * 100) / 100;
-      const cent = escolherCentavos_(sh, linha, base, d.centavosFixos);
+      // página antiga (sem valorBase) gera o Pix sem centavos: não acrescentar nenhum
+      const cent = d.valorBase === undefined ? 0 : escolherCentavos_(sh, linha, base, d.centavosFixos);
       const valorFinal = Math.round((base + cent / 100) * 100) / 100;
       const valores = {
         'Código': d.codigo,

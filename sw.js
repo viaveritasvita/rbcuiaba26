@@ -20,7 +20,7 @@ try {
   /* sem rede na instalação: apenas offline, sem push */
 }
 
-const CACHE = 'rbcuiaba26-v3';
+const CACHE = 'rbcuiaba26-v4';
 
 const APP_SHELL = [
   './',
@@ -54,7 +54,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE).then((cache) =>
       /* addAll individual para não abortar tudo se um item falhar */
-      Promise.allSettled(APP_SHELL.map((url) => cache.add(url)))
+      /* cache: 'reload' pula o cache HTTP do navegador: guarda sempre a versão nova */
+      Promise.allSettled(APP_SHELL.map((url) => cache.add(new Request(url, { cache: 'reload' }))))
     ).then(() => self.skipWaiting())
   );
 });
@@ -122,12 +123,13 @@ self.addEventListener('fetch', (event) => {
      pagamento): nunca interceptar nem guardar em cache — sempre ao vivo. */
   if (url.origin !== self.location.origin) return;
 
-  /* Páginas e config das refeições (preço, Pix): rede primeiro,
-     para que uma correção valha na hora; cache só sem sinal. */
-  if (url.origin === self.location.origin &&
-      (req.mode === 'navigate' || /refeicoes-config\.js$|data\.js$/.test(url.pathname))) {
+  /* Arquivos do próprio site: rede primeiro, para que toda correção valha
+     na hora (preço, Pix, código da página); a cópia guardada só entra sem sinal. */
+  if (url.origin === self.location.origin && !/\/assets\/.*\.(png|jpg|ics)$/.test(url.pathname)) {
+    // no-cache: confere com o servidor (resposta 304 rápida se nada mudou)
+    const fresco = req.mode === 'navigate' ? req : new Request(req, { cache: 'no-cache' });
     event.respondWith(
-      fetch(req).then((res) => {
+      fetch(fresco).then((res) => {
         if (res.ok) {
           const copy = res.clone();
           caches.open(CACHE).then((c) => c.put(req, copy));
