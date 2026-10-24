@@ -13,6 +13,8 @@
    - GET ?acao=status&codigo=RBXXXXXX → devolve só o status
      (a página mostra "Confirmado" quando o tesoureiro confirmar).
    - GET ?acao=listar&chave=SENHA     → lista tudo para o painel.html.
+   - POST {acao:'confirmar', chave, itens:[{codigo, obs}]} → marca
+     vários pedidos como Confirmado (conferência pelo extrato).
 
    O tesoureiro confere o extrato e troca a coluna Status para
    "Confirmado" (menu suspenso). Nada mais precisa ser editado.
@@ -93,10 +95,28 @@ function doPost(e) {
   lock.waitLock(20000);
   try {
     const d = JSON.parse(e.postData.contents);
-    if (!/^RB[A-Z0-9]{6}$/.test(d.codigo || '')) return json_({ ok: false, erro: 'código inválido' });
     const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ABA);
-    const linha = acharLinha_(sh, d.codigo);
     const agora = new Date();
+
+    /* Conferência do tesoureiro: marca vários pedidos como Confirmado
+       de uma vez (painel ou automação), protegida pela senha do painel.
+       itens: [{ codigo: 'RB...', obs: 'Pix 99Pay 24/10 09:03' }] */
+    if (d.acao === 'confirmar') {
+      if (d.chave !== CHAVE_PAINEL || CHAVE_PAINEL === 'TROQUE-ESTA-SENHA') return json_({ ok: false, erro: 'senha incorreta' });
+      const feitos = [], ausentes = [];
+      (d.itens || []).forEach(function (it) {
+        const l = acharLinha_(sh, String(it.codigo || ''));
+        if (!l) { ausentes.push(it.codigo); return; }
+        sh.getRange(l, COL['Status']).setValue('Confirmado');
+        sh.getRange(l, COL['Confirmado em']).setValue(agora);
+        if (it.obs) sh.getRange(l, COL['Observação do tesoureiro']).setValue(texto_(it.obs, 300));
+        feitos.push(it.codigo);
+      });
+      return json_({ ok: true, confirmados: feitos, naoEncontrados: ausentes });
+    }
+
+    if (!/^RB[A-Z0-9]{6}$/.test(d.codigo || '')) return json_({ ok: false, erro: 'código inválido' });
+    const linha = acharLinha_(sh, d.codigo);
 
     if (d.acao === 'registrar') {
       const acomp = d.acomp || {};
