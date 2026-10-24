@@ -18,10 +18,10 @@ const REFEICOES_CONFIG = {
      nome: até 25 letras, sem acento, como está no banco.
      cidade: até 15 letras, sem acento. */
   pix: {
-    chave: 'COLE_AQUI_A_CHAVE_PIX',
+    chave: '610eec59-27fe-42b2-b2d6-4d4e86d6d8b4', // chave aleatória (99Pay)
     nome: 'MARCELO CORREIA',
-    cidade: 'CUIABA',
-    banco: '',               // ex.: 'Sicredi' — só para exibir
+    cidade: '55000063',      // como o 99Pay preenche no QR dele
+    banco: '99Pay',          // só para exibir
     titular: 'Ir. Marcelo Correia · Grande Tesoureiro da 4ª Delegacia Litúrgica',
   },
 
